@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: druonio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: druonio
+  template:
+    metadata:
+      labels:
+        app: druonio
+    spec:
+      containers:
+      - image: registry.cloud.okteto.net/angrymouse/druonio:latest
+        name: druonio
+        resources:
+          limits:
+            cpu: "2"
+            memory: "3Gi"
+          requests:
+            cpu: "2"
+            memory: "3Gi"
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: druonio
+  annotations:
+    dev.okteto.com/auto-ingress: "true"
+spec:
+  type: ClusterIP
+  ports:
+  - name: "druonio"
+    port: 3000
+  selector:
+    app: druonio

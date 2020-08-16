@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Druon.IO</title>
+  <link rel="stylesheet" href="/app.css">
+  <script src="/socket.io/socket.io.js" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.3/pixi.min.js" integrity="sha512-J7UHpLx39bpqtP+aWP6yIuXroFk0XPkDQaS9zDthM4TVeaXstWYh556gxsXwwIwpAPSoKqVHW+eqz3B93SpyKg==" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div id="welcome">
+    <div class="left-block">
+      <div id="changelog">
+        <h5>16.08.2020</h5>
+        <h3>Development started</h3>
+      </div>
+    </div>
+    <div class="center-block">
+       <img src="/assets/logo.svg" id="logo" alt=""><br />
+       <input type="text" placeholder="Nickname" id="nickname"><br />
+       <input onclick="startGame()" type="button" class="button" id="play" value="Play">
+     </div>
+
+    <div class="right-block">
+      <a id="discord" href="https://discord.gg/ngp49bH"> <img src="https://discord.com/assets/192cb9459cbc0f9e73e2591b700f1857.svg" alt=""></a>
+    </div>
+
+  </div>
+  <div id="interface">
+    <div class="left-block">
+      <div id="leaderboard">
+
+      </div>
+        <div id="cords"></div>
+    </div>
+
+  </div>
+
+  <script defer src="/game.js" charset="utf-8"></script>
+</body>
+
+</html>

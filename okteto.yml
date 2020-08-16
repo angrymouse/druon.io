@@ -1,0 +1,9 @@
+name: druon-io
+image: node:12
+command:
+- node .
+workdir: /src
+forward:
+- 3000:3000
+persistentVolume:
+  enabled: true
