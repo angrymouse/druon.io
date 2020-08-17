@@ -131,6 +131,13 @@ h1{
   display: inline-block;
   position: relative;
 }
+#chat{
+  left:50%;
+  top:40%;
+  transform: translate(-50%,-50%);
+  position: absolute;
+  display: none;
+}
 input{
   --webkit-appearence:none;
   appearence:none;

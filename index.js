@@ -34,8 +34,8 @@
       })
       objects.push(player)
       players.push(socket)
-      player.me = true
-      socket.emit("spawn", player)
+
+      socket.emit("spawn", {...player,me:true})
       objects.filter(o => o.id !== player.id).forEach(o => {
         socket.emit("spawn", o)
       })
@@ -47,8 +47,10 @@
         })
       }, 1000)
       socket.on("rotate", async (angle) => {
+
         let objIndex = objects.findIndex(o => o.id == player.id)
         objects[objIndex].rotation = angle
+        // console.log(  objects[objIndex],objIndex);
         player.rotation = angle
         players.forEach(connection => {
           connection.emit("upgrade", player.id, {
@@ -76,7 +78,17 @@
           objects[objIndex].velocity.y= -objects[objIndex].speed
         }
       })
+      socket.on("chat-message",(message)=>{
+        players.forEach(connection=>{connection.emit("chat-message",player.id,message)})
+      })
+      socket.on("disconnect",()=>{
+          let objIndex = objects.findIndex(o => o.id == player.id)
+          objects.splice(objIndex,1)
+          players.forEach((pl) => {
+            pl.emit("base-killed",player.id)
+          });
 
+      })
     })
   })
 })()
@@ -90,10 +102,10 @@ needUpdate.forEach((ob,obi)=>{
   if(rid==-1){return}
     objects[rid].x+=ob.velocity.x
     objects[rid].y+=ob.velocity.y
-    if(objects[rid].x<50){objects[rid].x=9950}
-    else if(objects[rid].x>9950){objects[rid].x=50}
-    if(objects[rid].y<50){objects[rid].y=9950}
-    else if(objects[rid].y>9950){objects[rid].y=50}
+    if(objects[rid].x<10){objects[rid].x=9990}
+    else if(objects[rid].x>9990){objects[rid].x=10}
+    if(objects[rid].y<10){objects[rid].y=9990}
+    else if(objects[rid].y>9990){objects[rid].y=10}
     players.forEach(async player=>{
       player.emit("upgrade",ob.id,{position:{x:objects[rid].x,y:objects[rid].y}})
     })
