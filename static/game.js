@@ -1,9 +1,14 @@
+console.log('go ahead')
 let nickname=localStorage.getItem("nickname")
-if(nickname){
+if(nickname)
   document.getElementById('nickname').value=nickname
-}
-let objects=[]
-let me;
+let objects=[],me,
+keys = [
+{k: "A", t: "x", m: -1},
+{k: "D", t: "x", m: 1},
+{k: "W", t: "y", m: -1},
+{k: "S", t: "y", m: 1}
+]
 window.messages=[]
 document.getElementById('nickname').oninput=function(){
   nickname=document.getElementById('nickname').value
@@ -40,7 +45,7 @@ app.stage.on("mousemove",(event)=>{
     var dist_X = app.screen.width/2 - event.data.global.x;
     var angle = Math.atan2(dist_Y,dist_X);
 
-    socket.emit("rotate",angle)
+    socket.emit("move", "r",angle)
 })
 socket.on("upgrade",(id,upgrade)=>{
   let sprite=objects.find(o=>o.data.id==id).sprite
@@ -73,20 +78,16 @@ setTimeout(()=>{
   app.stage.removeChild(text)
 },5000)
 })
-socket.on("leaders",(leaders)=>{document.getElementById("leaderboard").innerHTML="<h1>Leaderboard</h1>"+leaders})
+socket.on("leaders",(leaders)=>document.getElementById("leaderboard").innerHTML="<h1>Leaderboard</h1>"+leaders)
 let chatting=false
 window.onkeydown=async(ev)=>{
-  if(chatting){return handleChatting(ev)}
-if(ev.code=="KeyA"){
-  socket.emit("move-x",-1)
-}else if(ev.code=="KeyD"){
-    socket.emit("move-x",1)
-}
-else if(ev.code=="KeyW"){
-    socket.emit("move-y",-1)
-}else if(ev.code=="KeyS"){
-    socket.emit("move-y",1)
-}else if(ev.code=="Enter"){
+  if(chatting)
+return handleChatting(ev)
+let k = keys.find(i=>ev.code.endsWith(i.k))
+if(k)
+socket.emit("move", k.t, k.m)
+else
+if(ev.code=="Enter"){
     let chat=document.getElementById("chat")
     chat.style.display="block"
     chat.focus()
@@ -105,12 +106,9 @@ chatting=false
   }
 }
 window.onkeyup=async (ev)=>{
-  if(ev.code=="KeyA"||ev.code=="KeyD"){
-    socket.emit("move-x",0)
-  }
-  else if(ev.code=="KeyW"||ev.code=="KeyS"){
-      socket.emit("move-y",0)
-  }
+let k = keys.find(i=>ev.code.endsWith(i.k))
+if(k)
+socket.emit("move", k.t, 0)
 }
 
 app.ticker.add(async ()=>{

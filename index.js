@@ -1,19 +1,16 @@
 (async () => {
-  let express = require("express")
-  let app = express()
-  let http = require('http').createServer(app);
-  let io = require("socket.io")(http)
+  let express = require("express"),
+  app = express(),
+  http = require('http').createServer(app),
+  io = require("socket.io")(http)
   app.use(express.static(__dirname + "/static"))
-  http.listen(3000, () => {
-
-  });
-  global.objects = []
-  global.players = []
+  http.listen(3000, () =>
+    console.log('Ready'))
+  global.objects = global.players = []
   io.of("/game").on("connection", async (socket) => {
     socket.once("spawn", async (nickname) => {
-      if (nickname.trim() == "") {
+      if (nickname.trim() == "")
         nickname = "druon.io"
-      }
       let player = {
         type: "PLAYER",
         base: "tank",
@@ -29,16 +26,16 @@
         me: false
       }
       socket.id = player.id
-      players.forEach(connection => {
+      players.forEach(connection =>
         connection.emit("spawn", player)
-      })
+      )
       objects.push(player)
       players.push(socket)
 
       socket.emit("spawn", {...player,me:true})
-      objects.filter(o => o.id !== player.id).forEach(o => {
+      objects.filter(o => o.id !== player.id).forEach(o =>
         socket.emit("spawn", o)
-      })
+      )
       setInterval(() => {
         players.forEach(p => {
           p.emit("leaders", (() => {
@@ -46,53 +43,39 @@
           })())
         })
       }, 1000)
-      socket.on("rotate", async (angle) => {
-
-        let objIndex = objects.findIndex(o => o.id == player.id)
-        objects[objIndex].rotation = angle
-        // console.log(  objects[objIndex],objIndex);
-        player.rotation = angle
-        players.forEach(connection => {
-          connection.emit("upgrade", player.id, {
-            rotation: angle
-          })
-        })
-      })
-      socket.on("move-x",(move)=>{
-          let objIndex = objects.findIndex(o => o.id == player.id)
-        if(move==0){
-            objects[objIndex].velocity.x=0
-        }else if(move>0){
-            objects[objIndex].velocity.x=  objects[objIndex].speed
-        }else{
-          objects[objIndex].velocity.x= -objects[objIndex].speed
+      socket.on("move", (i, m) => {
+        let obj = objects.find(o => o.id == player.id)
+        switch(i) {
+          case 'r':
+            obj.rotation = m
+            player.rotation = m
+            players.forEach(c => c.emit("upgrade", player.id,
+              {rotation: m}))
+          break
+          case 'x':
+            obj.velocity.x = (m==0?0:m>0?obj.speed:-obj.speed)
+          break
+          case 'y':
+            obj.velocity.y = (m==0?0:m>0?obj.speed:-obj.speed)
+          break
         }
       })
-      socket.on("move-y",(move)=>{
-          let objIndex = objects.findIndex(o => o.id == player.id)
-        if(move==0){
-            objects[objIndex].velocity.y=0
-        }else if(move>0){
-            objects[objIndex].velocity.y=  objects[objIndex].speed
-        }else{
-          objects[objIndex].velocity.y= -objects[objIndex].speed
-        }
-      })
-      socket.on("chat-message",(message)=>{
-        players.forEach(connection=>{connection.emit("chat-message",player.id,message)})
-      })
+      socket.on("chat-message", msg =>
+        players.forEach(con=>con.emit("chat-message",player.id,msg))
+      )
       socket.on("disconnect",()=>{
           let objIndex = objects.findIndex(o => o.id == player.id)
           objects.splice(objIndex,1)
-          players.forEach((pl) => {
+          players.forEach(pl =>
             pl.emit("base-killed",player.id)
-          });
+          )
 
       })
     })
   })
 })()
 setInterval(async ()=>{
+//console.log(objects, players)
 let needUpdate=  objects.filter(o=>(o.velocity.y!==0||o.velocity.x!==0))
 
 needUpdate.forEach((ob,obi)=>{
@@ -111,15 +94,10 @@ needUpdate.forEach((ob,obi)=>{
     })
   })
 },1000/40)
-Math.rand = function(min, max) {
-
-  let rand = min + Math.random() * (max + 1 - min);
-  return Math.floor(rand);
-}
+Math.rand = (min, max) => Math.floor(min + Math.random() * (max + 1 - min));
 
 function genId(prefix) {
-  if (!prefix) {
+  if (!prefix)
     prefix = "unk"
-  }
   return prefix + Date.now().toString(16) + (Math.random() * 100000).toString(16)
 }
