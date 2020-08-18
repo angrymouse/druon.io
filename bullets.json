@@ -1,0 +1,11 @@
+{
+  "fire":{
+    "skin":"bullet-fire.svg",
+    "speed":20,
+    "size":30,
+    "damage":1,
+    "recoil":10,
+    "hp":1,
+    "alive":1000
+  }
+}

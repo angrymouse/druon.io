@@ -1,0 +1,11 @@
+{
+  "tank":{
+    "startXp":1,
+    "hp":10,
+    "shotTimeout":100,
+    "skin":"tank.svg",
+
+    "speed":10,
+    "bullet":"fire"
+  }
+}
