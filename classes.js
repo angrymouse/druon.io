@@ -1,84 +1,152 @@
-class GameObject{
-constructor(scene,index){
-  this.scene=scene
-  this.index=index
-  this.id=this.scene.objects[this.index].id
-}
-get data(){
+class GameObject {
+  constructor(scene, index) {
+    this.scene = scene
+    this.index = index
+    this.id = this.scene.objects[this.index].id
+  }
+  get data() {
     return this.scene.objects[this.index]
-}
-destroy(){
-  this.scene.destroyObject(this.id)
-}
-update(edit){
-  scene.updateObject(this.id,edit)
-}
+  }
+  destroy() {
+    this.scene.destroyObject(this.id)
+  }
+  update(edit) {
+    scene.updateObject(this.id, edit)
+  }
+  set(c, t) {
+    this.update({
+      [c]: t
+    })
+  }
+  plusProp(c, np) {
+    this.update({
+      [c]: this.data[c] + np
+    })
+  }
+  get socket() {
+    return this.scene.sockets.find(c => c.id == this.id) || null
+  }
 }
 exports.Scene = class Scene {
-  constructor (io){
-    this.objects=[]
-    this.io=io
-    this.sockets=[]
+  constructor(io, bases) {
+    this.objects = []
+    this.io = io
+    this.bases = bases
+    this.sockets = []
     this.startPE()
   }
-  addObject(type,socket,params){
-    let ob={
-      type:type.toUpperCase(),
-      velocity:{x:0,y:0},
-      id:genId("dr"),
+  addObject(type, params) {
+    let ob = {
+      type: type.toUpperCase(),
+      velocity: {
+        x: 0,
+        y: 0
+      },
+      rotation:0,
+      id: genId("dr"),
+      x: Math.rand(10, 9990),
+      y: Math.rand(10, 9990),
       ...params
 
     }
     this.objects.push(ob)
-  this.dispatch("spawn",ob)
+
+
     return this.getObject(ob.id)
   }
-  getObject(id){
-    let oi=this.objects.findIndex(o=>o.id==id)
-    if(oi==-1){return null}
-    return new GameObject(this,oi)
+  addPlayer(base, socket, other) {
+    let id = genId("player")
+    let baseObj = bases[base]
+    socket.id = id
+    socket.emit("id", id)
+    this.sockets.push(socket)
+    return this.addObject("PLAYER", {
+      id: id,
+      base: base,
+      lastShot: 0,
+      shotting: false,
+      xp: 1,
+
+      size: 100,
+      rotation: 0,
+      nickname: other.nickname || "druon.io",
+      ...baseObj
+    })
+
+
   }
-  get gameObjects(){
-    let self=this
-    return this.objects.map((o,oi)=>{return new GameObject(self,oi)})
+  getObject(id) {
+    let oi = this.objects.findIndex(o => o.id == id)
+    if (oi == -1) {
+      return null
+    }
+    return new GameObject(this, oi)
   }
-  destroyObject(id){
-    let oi=this.objects.findIndex(o=>o.id==id)
-    if(oi==-1){return false}
-    this.dispatch("destroy",id)
-    this.objects.splice(oi,1)
+  get gameObjects() {
+    let self = this
+    return this.objects.map((o, oi) => {
+      return new GameObject(self, oi)
+    })
+  }
+  destroyObject(id) {
+    let oi = this.objects.findIndex(o => o.id == id)
+    if (oi == -1) {
+      return false
+    }
+
+    this.objects.splice(oi, 1)
     return true
   }
-  updateObject(id,edit){
-    let oi=this.objects.findIndex(o=>o.id==id)
-    if(oi==-1){return false}
-    this.objects[oi]={...this.objects[oi],...edit}
+  updateObject(id, edit) {
+    let oi = this.objects.findIndex(o => o.id == id)
+    if (oi == -1) {
+      return false
+    }
+    this.objects[oi] = {
+      ...this.objects[oi],
+      ...edit
+    }
 
-    return new GameObject(this,oi)
+    return new GameObject(this, oi)
   }
-  dispatch(ue,...arg){
-    this.sockets.forEach(async socket=>socket.emit(ue,...arg))
+  dispatch(ue, ...arg) {
+    this.sockets.forEach(async socket => socket.emit(ue, ...arg))
   }
-  dispatchOne(id,ue,...arg){
-    let socket=this.sockets.find(s=>s.id==id);
-    if(!socket){return}
-    socket.emit(ue,...arg)
+  dispatchExclude(exclude, ue, ...arg) {
+    this.sockets.filter(s => s.id !== exclude).forEach(async socket => socket.emit(ue, ...arg))
   }
-  startPE(){
-    let self=this
-    setInterval(async ()=>{
+  dispatchOne(id, ue, ...arg) {
+    let socket = this.sockets.find(s => s.id == id);
+    if (!socket) {
+      return
+    }
+    socket.emit(ue, ...arg)
+  }
+  startPE() {
+    let self = this
+    setInterval(async () => {
       await physicsTick(self)
-    
-      self.dispatch("upgrades",self.objects)
-    },1000/30)
+
+      self.dispatch("upgrades", self.objects)
+    }, 1000 / 30)
+    setInterval(() => {
+      self.dispatch("leaderboard", self.objects.filter(o => o.type == "PLAYER").sort((a, b) => b.xp - a.xp).slice(0, 10).map((l, li) => `${li+1}. ${l.nickname} - ${l.xp}xp <br>`).join(""))
+
+
+    }, 1000)
   }
 }
-function genId(prefix) {
-  if (!prefix) {
-    prefix = "unk"
-  }
-  return prefix + Date.now().toString(16) + (Math.random() * 100000).toString(16)
-}
-async function physicsTick(scene){
-console.log(scene.gameObjects);
+
+
+async function physicsTick(scene) {
+  scene.gameObjects.forEach(async (obj, i) => {
+    obj.plusProp("x", obj.data.velocity.x)
+    obj.plusProp("y", obj.data.velocity.y)
+    let exp = require("./psy_tests.js")(obj)
+exp.forEach((ev, i) => {
+  if(ev.e){ev.a()}
+});
+
+  });
+
 }

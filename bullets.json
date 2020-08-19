@@ -5,7 +5,8 @@
     "size":30,
     "damage":1,
     "recoil":10,
+
     "hp":1,
-    "alive":1000
+    "alive":500
   }
 }

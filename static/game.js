@@ -3,7 +3,9 @@ let time=Date.now()
 if (nickname) {
   document.getElementById('nickname').value = nickname
 }
-let objects = []
+let oldState=[]
+let newState=[]
+let sprites=[]
 let me;
 window.messages = []
 document.getElementById('nickname').oninput = function() {
@@ -24,7 +26,7 @@ async function startGame() {
     .add([
       "/assets/druon-grid.png",
       "/assets/skins/tank.svg",
-      "/assets/bullets/bullet-fire.svg"
+      "/assets/skins/bullet-fire.svg"
     ])
     .load(play);
 }
@@ -35,11 +37,11 @@ async function play() {
     10000,
   );
   app.stage.addChild(background);
-  app.stage.pivot.set(5000, 5000)
+
   let socket = io("/game")
   socket.emit("spawn", nickname)
 
-  socket.on("spawn", handleSpawn)
+socket.on("id",(id)=>{window.id=id})
   app.stage.interactive = true
   socket.emit("pingx",Date.now())
 setInterval(()=>{
@@ -56,51 +58,15 @@ socket.on("pongx",(ping)=>{document.getElementById("ping").innerHTML=Date.now()-
   })
 
   app.stage.on("pointerdown", (event) => {
-    socket.emit("shotting", true)
+    socket.emit("shoting", true)
   })
   app.stage.on("pointerup", (event) => {
-    socket.emit("shotting", false)
+    socket.emit("shoting", false)
   })
-  socket.on("upgrade", (id, upgrade) => {
-    let ob = objects.find(o => o.data.id == id)
-    let sprite = ob.sprite
-    if (!sprite) {
-      return
-    }
-    Object.keys(upgrade).forEach(up => {
-      sprite[up] = upgrade[up]
-    })
-    if (upgrade.position && ob.data.type == "PLAYER") {
-      sprite.nickname.position.x = sprite.position.x;
-      sprite.nickname.position.y = sprite.position.y + 50;
-    }
+  socket.on("upgrades", (objects) => {
+    newState=objects
   })
-  socket.on("upgrades", (upgrades) => {
-    upgrades.forEach(async (up) => {
 
-
-        let ob=objects.find(o=>o.data.id==up.id)
-        let sprite=ob.sprite
-        if(!sprite){return}
-        Object.keys(up.upgrade).forEach(u=>{
-          sprite[u]=up.upgrade[u]
-        })
-        if(up.upgrade.position&&ob.data.type=="PLAYER"){
-          sprite.nickname.position.x=sprite.position.x;
-          sprite.nickname.position.y=sprite.position.y+50;
-        }
-
-    })
-
-  })
-  socket.on("destroy", (id) => {
-    let index = objects.findIndex(o => o.data.id == id)
-    if (index == -1) {
-      return
-    }
-    app.stage.removeChild(objects[index].sprite)
-    objects.splice(index, 1)
-  })
   socket.on("chat-message", (id, message) => {
     let style = new PIXI.TextStyle({
 
@@ -131,13 +97,13 @@ socket.on("pongx",(ping)=>{document.getElementById("ping").innerHTML=Date.now()-
       return handleChatting(ev)
     }
     if (ev.code == "KeyA") {
-      socket.emit("move-x", -1)
+      socket.emit("move","x", -1)
     } else if (ev.code == "KeyD") {
-      socket.emit("move-x", 1)
+      socket.emit("move","x", 1)
     } else if (ev.code == "KeyW") {
-      socket.emit("move-y", -1)
+      socket.emit("move","y", -1)
     } else if (ev.code == "KeyS") {
-      socket.emit("move-y", 1)
+      socket.emit("move","y", 1)
     } else if (ev.code == "Enter") {
       let chat = document.getElementById("chat")
       chat.style.display = "block"
@@ -160,24 +126,46 @@ socket.on("pongx",(ping)=>{document.getElementById("ping").innerHTML=Date.now()-
   }
   window.onkeyup = async (ev) => {
     if (ev.code == "KeyA" || ev.code == "KeyD") {
-      socket.emit("move-x", 0)
+      socket.emit("move","x", 0)
     } else if (ev.code == "KeyW" || ev.code == "KeyS") {
-      socket.emit("move-y", 0)
+      socket.emit("move","y", 0)
     }
   }
 
   app.ticker.add(async () => {
-    messages.forEach(async message => {
-      let author = objects.find(o => o.data.id == message.author).sprite
-      console.log(author);
-      message.position.x = author.position.x;
-      message.position.y = author.position.y - 50;
-    })
-    if (!me) {
-      return
-    }
+    for(let obj of newState){
+      let sprite
+      let spriteIndex=sprites.findIndex(s=>{return s.id==obj.id})
 
-    app.stage.pivot.set(me.position.x - (app.screen.width / 2), me.position.y - (app.screen.height / 2))
+      if(spriteIndex==-1){
+        sprite=new PIXI.Sprite(PIXI.Loader.shared.resources["/assets/skins/"+obj.skin].texture)
+
+        sprite.id=obj.id
+        sprite.anchor.set(0.5,0.5)
+        sprites.push(sprite)
+        app.stage.addChild(sprite)
+        spriteIndex=sprites.findIndex(s=>{return s.id==obj.id})
+        sprite.width=obj.width?obj.width:obj.size
+        sprite.height=obj.height?obj.height:obj.size
+
+      }
+      sprite=sprites[spriteIndex]
+      sprite.position.set(obj.x,obj.y)
+sprite.rotation=obj.rotation
+      sprite.width=obj.width?obj.width:obj.size
+      sprite.height=obj.height?obj.height:obj.size
+      if(obj.id==id){
+        me=sprite
+
+        app.stage.pivot.set(obj.velocity.x+me.position.x - (app.screen.width / 2), obj.velocity.y+me.position.y - (app.screen.height / 2))
+      }
+    }
+let toDestroy=sprites.filter(s=>{return !newState.find(o=>o.id==s.id)})
+
+toDestroy.forEach((sprite, i) => {
+  app.stage.removeChild(sprite)
+});
+
   })
   setInterval(() => {
     if (!me) {
@@ -185,63 +173,4 @@ socket.on("pongx",(ping)=>{document.getElementById("ping").innerHTML=Date.now()-
     }
     document.getElementById("cords").innerHTML = "X - " + me.position.x + " | Y - " + me.position.y
   }, 3000)
-}
-
-async function handleSpawn(obj) {
-  switch (obj.type) {
-    case "PLAYER":
-      (async () => {
-        let texture = PIXI.Loader.shared.resources["/assets/skins/" + obj.skin].texture
-        let sprite = new PIXI.Sprite(texture)
-        sprite.width = sprite.height = 100
-        sprite.rotation = obj.rotation
-        sprite.anchor.set(0.5, 0.5)
-        sprite.position.set(obj.x, obj.y)
-        app.stage.addChild(sprite)
-        objects.push({
-          data: obj,
-          sprite: sprite
-        })
-        let style = new PIXI.TextStyle({
-
-          fill: "blue",
-          fontFamily: "Oxygen-Regular",
-          fontSize: 16
-        });
-        let text = new PIXI.Text(obj.nickname, style);
-        text.anchor.set(0.5, 0.5)
-        app.stage.addChild(sprite)
-        text.position.x = sprite.position.x;
-        text.position.y = sprite.position.y + 50;
-        sprite.nickname = text
-        app.stage.addChild(text)
-        if (obj.me) {
-          me = sprite
-          app.stage.pivot.set(obj.x - (app.screen.width / 2), obj.y - (app.screen.height / 2))
-          document.getElementById("cords").innerHTML = "X - " + sprite.position.x + " | Y - " + sprite.position.y
-        }
-      })()
-
-      break;
-    case "BULLET":
-      (async () => {
-
-        let texture = PIXI.Loader.shared.resources["/assets/bullets/" + obj.skin].texture
-        let sprite = new PIXI.Sprite(texture)
-        sprite.width = sprite.height = 100
-        sprite.rotation = obj.rotation
-        sprite.anchor.set(0.5, 0.5)
-        sprite.width = sprite.height = obj.size
-        sprite.position.set(obj.x, obj.y)
-        app.stage.addChild(sprite)
-        objects.push({
-          data: obj,
-          sprite: sprite
-        })
-      })()
-
-      break;
-    default:
-
-  }
 }
