@@ -1,4 +1,5 @@
 let nickname = localStorage.getItem("nickname")
+let time=Date.now()
 if (nickname) {
   document.getElementById('nickname').value = nickname
 }
@@ -40,7 +41,12 @@ async function play() {
 
   socket.on("spawn", handleSpawn)
   app.stage.interactive = true
-
+  socket.emit("pingx",Date.now())
+setInterval(()=>{
+time=Date.now()
+  socket.emit("pingx",Date.now())
+},1000)
+socket.on("pongx",(ping)=>{document.getElementById("ping").innerHTML=Date.now()-time+"ms"})
   app.stage.on("mousemove", (event) => {
     var dist_Y = app.screen.height / 2 - event.data.global.y;
     var dist_X = app.screen.width / 2 - event.data.global.x;

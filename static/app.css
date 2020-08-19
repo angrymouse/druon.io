@@ -50,7 +50,7 @@ h1{
   width: 300px;
   text-align: center;
   color: #fae3cf;
-  display: inline-block;
+  display: block;
   position: relative;
   background-color: rgba(57, 57, 57, 0.53);
   border-radius: 4px;
@@ -61,9 +61,21 @@ h1{
   user-select: none;
   text-align: center;
   color: #fae3cf;
-  display:block;
+  display:inline-block;
   margin-top:5px;
   width:200px;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.53);
+  border-radius: 4px;
+}
+#ping{
+   pointer-events: none;
+  user-select: none;
+  text-align: center;
+  color: #fae3cf;
+  display:inline-block;
+  margin-top:5px;
+  width:90px;
   position: relative;
   background-color: rgba(0, 0, 0, 0.53);
   border-radius: 4px;

@@ -6,11 +6,13 @@ global.fps = 30;
   let app = express()
   let http = require('http').createServer(app);
   let io = require("socket.io")(http)
+  let {Scene,GameObject}=require("./classes.js")
 
   app.use(express.static(__dirname + "/static"))
   http.listen(3000, () => {
 
   });
+  global.scene=new Scene(io)
   global.objects = []
   global.players = []
   io.of("/game").on("connection", async (socket) => {
@@ -102,6 +104,7 @@ global.fps = 30;
           connection.emit("chat-message", player.id, message)
         })
       })
+      socket.on("pingx",(time)=>{socket.emit("pongx",Date.now()-time)})
       socket.on("disconnect", () => {
         let objIndex = objects.findIndex(o => o.id == player.id)
         objects.splice(objIndex, 1)
