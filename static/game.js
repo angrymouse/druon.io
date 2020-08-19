@@ -6,6 +6,15 @@ if (nickname) {
 let oldState=[]
 let newState=[]
 let sprites=[]
+let destroing=[]
+let currentOffset={
+  x:0,
+  y:0
+}
+let offsettingTo={
+  x:0,
+  y:0
+}
 let me;
 window.messages = []
 document.getElementById('nickname').oninput = function() {
@@ -50,8 +59,8 @@ time=Date.now()
 },1000)
 socket.on("pongx",(ping)=>{document.getElementById("ping").innerHTML=Date.now()-time+"ms"})
   app.stage.on("mousemove", (event) => {
-    var dist_Y = app.screen.height / 2 - event.data.global.y;
-    var dist_X = app.screen.width / 2 - event.data.global.x;
+    var dist_Y = (app.screen.height / 2)+currentOffset.y - event.data.global.y;
+    var dist_X = (app.screen.width / 2)+currentOffset.x - event.data.global.x;
     var angle = Math.atan2(dist_Y, dist_X);
 
     socket.emit("rotate", angle)
@@ -132,7 +141,7 @@ socket.on("pongx",(ping)=>{document.getElementById("ping").innerHTML=Date.now()-
     }
   }
 
-  app.ticker.add(async () => {
+  app.ticker.add(async (delta) => {
     for(let obj of newState){
       let sprite
       let spriteIndex=sprites.findIndex(s=>{return s.id==obj.id})
@@ -156,15 +165,41 @@ sprite.rotation=obj.rotation
       sprite.height=obj.height?obj.height:obj.size
       if(obj.id==id){
         me=sprite
-
-        app.stage.pivot.set(obj.velocity.x+me.position.x - (app.screen.width / 2), obj.velocity.y+me.position.y - (app.screen.height / 2))
+        offsettingTo=obj.velocity
+        app.stage.pivot.set(currentOffset.x+me.position.x - (app.screen.width / 2), currentOffset.y+me.position.y - (app.screen.height / 2))
       }
+    }
+    for (var prop in offsettingTo) {
+    if(!currentOffset[prop]){currentOffset[prop]=0}
+
+    if(offsettingTo[prop]>0){
+    if(currentOffset[prop]<offsettingTo[prop]){currentOffset[prop]+=offsettingTo[prop]/10}
+    if(currentOffset[prop]>offsettingTo[prop]){currentOffset[prop]-=offsettingTo[prop]/10}
+  }else   if(offsettingTo[prop]<0){
+    if(currentOffset[prop]>offsettingTo[prop]){currentOffset[prop]+=offsettingTo[prop]/10}
+    if(currentOffset[prop]<offsettingTo[prop]){currentOffset[prop]-=offsettingTo[prop]/10}
+  } else if(currentOffset[prop].toFixed(1)!==0){
+    let minuser=Math.abs(currentOffset[prop])/10>0.1?Math.abs(currentOffset[prop])/10:0.1
+    currentOffset[prop]+=currentOffset[prop]<0?minuser:-minuser
+  }else {
+    currentOffset[prop]=0
+  }
     }
 let toDestroy=sprites.filter(s=>{return !newState.find(o=>o.id==s.id)})
 
 toDestroy.forEach((sprite, i) => {
-  app.stage.removeChild(sprite)
+  let ind=destroing.push(sprite)-1
+  setTimeout(()=>{
+    destroing.splice(ind,1)
+      app.stage.removeChild(sprite)
+  },1000)
+
 });
+destroing.forEach(sp=>{
+  sp.alpha-=0.01*delta
+  sp.scale.x+=0.003
+  sp.scale.y+=0.003
+})
 
   })
   setInterval(() => {
