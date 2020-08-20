@@ -5,7 +5,7 @@ if (nickname) {
 }
 let oldState=[]
 let newState=[]
-let sprites=[]
+let sprites=new Map()
 let destroing=[]
 let currentOffset={
   x:0,
@@ -143,22 +143,19 @@ socket.on("pongx",(ping)=>{document.getElementById("ping").innerHTML=Date.now()-
 
   app.ticker.add(async (delta) => {
     for(let obj of newState){
-      let sprite
-      let spriteIndex=sprites.findIndex(s=>{return s.id==obj.id})
+      let sprite=sprites.get(obj.id)
 
-      if(spriteIndex==-1){
+      if(!sprite){
+
         sprite=new PIXI.Sprite(PIXI.Loader.shared.resources["/assets/skins/"+obj.skin].texture)
 
         sprite.id=obj.id
         sprite.anchor.set(0.5,0.5)
-        sprites.push(sprite)
+        sprites.set(obj.id,sprite)
         app.stage.addChild(sprite)
-        spriteIndex=sprites.findIndex(s=>{return s.id==obj.id})
         sprite.width=obj.width?obj.width:obj.size
         sprite.height=obj.height?obj.height:obj.size
-
       }
-      sprite=sprites[spriteIndex]
       sprite.position.set(obj.x,obj.y)
 sprite.rotation=obj.rotation
       sprite.width=obj.width?obj.width:obj.size
@@ -185,20 +182,27 @@ sprite.rotation=obj.rotation
     currentOffset[prop]=0
   }
     }
-let toDestroy=sprites.filter(s=>{return !newState.find(o=>o.id==s.id)})
+    let sa=[...sprites.values()]
+let toDestroy=sa.filter(s=>{return !newState.find(o=>o.id==s.id)})
 
 toDestroy.forEach((sprite, i) => {
-  let ind=destroing.push(sprite)-1
+destroing.push(sprite)
+
   setTimeout(()=>{
-    destroing.splice(ind,1)
+    let index=destroing.findIndex(s=>s.id==sprite.id)
+
+    destroing.splice(index,1)
+      sprites.delete(sprite.id)
       app.stage.removeChild(sprite)
-  },1000)
+
+  },500)
 
 });
 destroing.forEach(sp=>{
-  sp.alpha-=0.01*delta
-  sp.scale.x+=0.003
-  sp.scale.y+=0.003
+  if(!sp){return}
+  sp.alpha-=0.03*delta
+  sp.scale.x+=0.01*delta
+  sp.scale.y+=0.01*delta
 })
 
   })
@@ -208,4 +212,7 @@ destroing.forEach(sp=>{
     }
     document.getElementById("cords").innerHTML = "X - " + me.position.x + " | Y - " + me.position.y
   }, 3000)
+}
+window.onresize=()=>{
+  app.renderer.resize(window.innerWidth, window.innerHeight);
 }

@@ -42,10 +42,12 @@ exports.Scene = class Scene {
         x: 0,
         y: 0
       },
-      rotation:0,
+      rotation: 0,
       id: genId("dr"),
+      rp: 0,
       x: Math.rand(10, 9990),
       y: Math.rand(10, 9990),
+      hitbox:"circle",
       ...params
 
     }
@@ -66,7 +68,7 @@ exports.Scene = class Scene {
       lastShot: 0,
       shotting: false,
       xp: 1,
-
+      hitbox:"circle",
       size: 100,
       rotation: 0,
       nickname: other.nickname || "druon.io",
@@ -110,6 +112,8 @@ exports.Scene = class Scene {
     return new GameObject(this, oi)
   }
   dispatch(ue, ...arg) {
+
+
     this.sockets.forEach(async socket => socket.emit(ue, ...arg))
   }
   dispatchExclude(exclude, ue, ...arg) {
@@ -140,12 +144,15 @@ exports.Scene = class Scene {
 
 async function physicsTick(scene) {
   scene.gameObjects.forEach(async (obj, i) => {
-    obj.plusProp("x", obj.data.velocity.x)
-    obj.plusProp("y", obj.data.velocity.y)
+    let uV = calcV(obj.data.rotation, obj.data.rp, true)
+    obj.plusProp("x", obj.data.velocity.x + Math.round(uV.x))
+    obj.plusProp("y", obj.data.velocity.y + Math.round(uV.y))
     let exp = require("./psy_tests.js")(obj)
-exp.forEach((ev, i) => {
-  if(ev.e){ev.a()}
-});
+    exp.forEach((ev, i) => {
+      if (ev.e) {
+        ev.a()
+      }
+    });
 
   });
 

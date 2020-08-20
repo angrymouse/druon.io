@@ -39,12 +39,16 @@ module.exports=(obj)=>{
     velocity:calcV(obj.data.rotation,bullet.speed),
         id:genId("bullet")
       })
-      let changes=calcV(obj.data.rotation,bullet.speed,true)
-      obj.plusProp("x",Math.round(changes.x))
-        obj.plusProp("y",Math.round(changes.y))
+      obj.set("rp",bullet.recoil)
       setTimeout(()=>{bo.destroy()},bullet.alive)
+      setTimeout(()=>{
+        obj.set("rp",0)
+      },Math.min(bullet.alive/4,500))
+
+
       }
-    }
+    },
+
   ]
 
 }

@@ -5,7 +5,7 @@
     "shotTimeout":1000,
     "skin":"tank.svg",
 
-    "speed":15,
+    "speed":7,
     "bullet":"fire"
   }
 }
