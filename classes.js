@@ -1,3 +1,4 @@
+let {handleCollisions}=require("./physics.js")
 class GameObject {
   constructor(scene, index) {
     this.scene = scene
@@ -144,9 +145,12 @@ exports.Scene = class Scene {
 
 async function physicsTick(scene) {
   scene.gameObjects.forEach(async (obj, i) => {
+    let canMove=await handleCollisions(obj)
+    if(canMove){
     let uV = calcV(obj.data.rotation, obj.data.rp, true)
     obj.plusProp("x", obj.data.velocity.x + Math.round(uV.x))
     obj.plusProp("y", obj.data.velocity.y + Math.round(uV.y))
+  }
     let exp = require("./psy_tests.js")(obj)
     exp.forEach((ev, i) => {
       if (ev.e) {

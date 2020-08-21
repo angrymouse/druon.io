@@ -19,14 +19,14 @@ global.fps = 30;
   global.objects = []
   global.players = []
   io.of("/game").on("connection", async (socket) => {
-    socket.once("spawn", async (nickname) => {
+    socket.on("spawn", async (nickname) => {
       if (nickname.trim() == "") {
         nickname = "druon.io"
       }
       socket.sprite = scene.addPlayer("tank", socket, {
         nickname: nickname
       })
-
+      socket.god=false
 
 
 
@@ -41,8 +41,11 @@ global.fps = 30;
   socket.sprite.set("shoting",Boolean(v))
 
       })
+      socket.on("chat-message",(message)=>{
+        scene.dispatch("chat-message",socket.sprite.id,message)
+      })
       socket.on("move", (c,move) => {
-        if(!["x","y"].includes(c)){return}
+        if(!["x","y"].includes(c)||!socket.sprite){return}
         if (move == 0) {
 
           socket.sprite.update({
@@ -59,6 +62,7 @@ global.fps = 30;
             }
           })
         } else {
+          if(!socket.sprite||!socket.sprite.data||!socket.sprite.data.velocity){return}
           socket.sprite.update({
             velocity: {
               ...socket.sprite.data.velocity,
@@ -97,6 +101,8 @@ global.genId=function genId(prefix) {
   }
   return prefix + Date.now().toString(16) + (Math.random() * 100000).toString(16)
 }
+global.godcode=genId("GOD")
+console.log("God code: "+godcode);
 global.calcV=(angle,speed,rev)=>{
   return {
     x:rev?Math.cos(angle)*speed:-Math.cos(angle)*speed,
