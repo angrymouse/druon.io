@@ -103,7 +103,7 @@ async function play() {
     let bId = "message"
     if(oMap.get(bId)){
       app.stage.removeChild(oMap.get(bId).sprite)
-
+      clearTimeout(oMap.get(bId).timeout)
     }
     oMap.set(bId, {
       x: 0,
