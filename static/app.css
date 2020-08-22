@@ -154,7 +154,9 @@ h1{
   transform: translate(-50%,-50%);
   position: absolute;
   display: none;
+  color:#000
 }
+
 input{
   --webkit-appearence:none;
   appearence:none;

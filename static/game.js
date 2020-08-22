@@ -7,6 +7,7 @@ let oldState = []
 let newState = []
 let sprites = new Map()
 let oAttributes = new Map()
+let textures=new Map()
 let destroing = []
 let currentOffset = {
   x: 0,
@@ -18,7 +19,15 @@ let offsettingTo = {
 }
 let me;
 window.messages = []
-
+function fetchTexture(path){
+  if(textures.get(path)){
+    return textures.get(path)
+  }else{
+    let texture=PIXI.Texture.from("/assets/"+path)
+    textures.set(path,texture)
+    return texture
+  }
+}
 function genId(prefix) {
   if (!prefix) {
     prefix = "unk"
@@ -43,7 +52,9 @@ async function startGame() {
     .add([
       "/assets/druon-grid.png",
       "/assets/skins/tank.svg",
-      "/assets/skins/bullet-fire.svg"
+      "/assets/skins/bullet-fire.svg",
+      "/assets/skins/ertu-skin.svg",
+      "/assets/skins/ertu-bullet.svg"
     ])
     .load(play);
 }
@@ -91,7 +102,7 @@ async function play() {
   socket.on("chat-message", (id, message) => {
     let style = new PIXI.TextStyle({
 
-      fill: "orange",
+      fill: "#776d8a",
       fontFamily: "Alata",
       fontSize: 18
     });
@@ -170,7 +181,7 @@ async function play() {
 
       if (!sprite) {
 
-        sprite = new PIXI.Sprite(PIXI.Loader.shared.resources["/assets/skins/" + obj.skin].texture)
+        sprite = new PIXI.Sprite(fetchTexture("skins/"+obj.skin))
 
         sprite.id = obj.id
         sprite.anchor.set(0.5, 0.5)
@@ -179,6 +190,42 @@ async function play() {
         sprite.width = obj.width ? obj.width : obj.size
         sprite.height = obj.height ? obj.height : obj.size
         oAttributes.set(obj.id, new Map())
+        if(obj.type=="PLAYER"){
+          let nickStyle = new PIXI.TextStyle({
+
+            fill: "#056676",
+            fontFamily: "Alata",
+            fontSize: 14
+          });
+          let xpStyle = new PIXI.TextStyle({
+
+            fill: "#68b0ab",
+            fontFamily: "Alata",
+            fontSize: 12
+          });
+          let nickname = new PIXI.Text(obj.nickname, nickStyle);
+  let xp = new PIXI.Text(obj.xp+"xp",xpStyle);
+          nickname.anchor.set(0.5, 0.5)
+  xp.anchor.set(0.5, 0.5)
+          let oMap = oAttributes.get(obj.id)
+
+
+          oMap.set("nickname", {
+            x: -xp.width/2,
+            y: 40,
+            id:"nickname",
+            sprite: nickname
+          })
+          oMap.set("xp", {
+            x: nickname.width-(xp.width/2),
+            y: 41,
+            id:"xp",
+            sprite: xp
+          })
+          oAttributes.set(obj.id,oMap)
+          app.stage.addChild(nickname)
+          app.stage.addChild(xp)
+        }
       }
       sprite.position.set(obj.x, obj.y)
       sprite.rotation = obj.rotation
@@ -189,9 +236,13 @@ async function play() {
         offsettingTo = obj.velocity
         app.stage.pivot.set(currentOffset.x + me.position.x - (app.screen.width / 2), currentOffset.y + me.position.y - (app.screen.height / 2))
       }
+
       let attributes = oAttributes.get(obj.id)
       let vals = [...attributes.values()]
       vals.forEach((a) => {
+        if(a.id=="xp"){
+          a.sprite.text=obj.xp+"xp"
+        }
         a.sprite.position.set(sprite.position.x + a.x, sprite.position.y + a.y)
       });
 
