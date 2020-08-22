@@ -26,23 +26,23 @@ let handleByType={
       player.plusProp("y",Math.round(move.y/4))
       collider.plusProp("x",Math.round(-move.x))
       collider.plusProp("y",Math.round(-move.y))
-      
+
       break;
     default:
-
+return
   }
 }
 }
 exports.handleCollisions=async (obj)=>{
 let collides=obj.scene.gameObjects.filter(go=>{
   if(go.id==obj.id){return false}
-  return hitTests[go.data.hitbox][obj.data.hitbox](go,obj)
+  return  hitTests[go.data.hitbox][obj.data.hitbox](go,obj)
 })
-if(collides.length>0){
-  collides.forEach(async(collider) => {
-    handleByType[obj.data.type](obj,collider)
-  });
-
+for (var collider of collides) {
+  await  handleByType[obj.data.type](obj,collider)
 }
+
+
+
 return true
 }
