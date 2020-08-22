@@ -26,7 +26,7 @@ let handleByType={
       player.plusProp("y",Math.round(move.y/4))
       collider.plusProp("x",Math.round(-move.x))
       collider.plusProp("y",Math.round(-move.y))
-      console.log(move);
+      
       break;
     default:
 
