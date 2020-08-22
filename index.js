@@ -58,7 +58,7 @@ global.fps = 30;
         scene.dispatch("chat-message",socket.sprite.id,message)
       })
       socket.on("move", (c,move) => {
-        if(!["x","y"].includes(c)||!socket.sprite){return}
+        if(!["x","y"].includes(c)||!socket.sprite||!socket.sprite.data){return}
         if (move == 0) {
 
           socket.sprite.update({
