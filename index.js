@@ -27,7 +27,7 @@ global.fps = 30;
       socket.sprite = scene.addPlayer("tank", socket, {
         nickname: nickname
       })
-      socket.god=false
+      socket.god=true
 
 
 
@@ -96,12 +96,12 @@ global.fps = 30;
   })
 })()
 
-setInterval(() => {
-
-  scene.dispatch("leaders", scene.objects.filter(o => o.type == "PLAYER").sort((a, b) => b.xp - a.xp).slice(0, 10).map((l, li) => `${li+1}. ${l.nickname} - ${l.xp}xp <br>`).join(""))
-
-
-}, 1000)
+// setInterval(() => {
+//
+//   scene.dispatch("leaders", scene.objects.filter(o => o.type == "PLAYER").sort((a, b) => b.xp - a.xp).slice(0, 10).map((l, li) => `${li+1}. ${l.nickname} - ${l.xp}xp <br>`).join(""))
+//
+//
+// }, 1000)
 Math.rand = function(min, max) {
 
   let rand = min + Math.random() * (max + 1 - min);

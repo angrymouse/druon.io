@@ -1,12 +1,15 @@
 let {handleCollisions}=require("./physics.js")
 class GameObject {
-  constructor(scene, index) {
+  constructor(scene, id) {
     this.scene = scene
-    this.index = index
-    this.id = this.scene.objects[this.index].id
+
+    this.id = id
   }
   get data() {
-    return this.scene.objects[this.index]
+    return this.scene.objects.get(this.id)
+  }
+  set data(edit){
+    return this.scene.objects.set(this.id,edit)
   }
   destroy() {
     this.scene.destroyObject(this.id)
@@ -30,7 +33,7 @@ class GameObject {
 }
 exports.Scene = class Scene {
   constructor(io, bases) {
-    this.objects = []
+    this.objects = new Map()
     this.io = io
     this.bases = bases
     this.sockets = []
@@ -52,7 +55,7 @@ exports.Scene = class Scene {
       ...params
 
     }
-    this.objects.push(ob)
+    this.objects.set(ob.id,ob)
 
 
     return this.getObject(ob.id)
@@ -79,38 +82,28 @@ exports.Scene = class Scene {
 
   }
   getObject(id) {
-    let oi = this.objects.findIndex(o => o.id == id)
-    if (oi == -1) {
-      return null
-    }
-    return new GameObject(this, oi)
+    return new GameObject(this, id)
   }
   get gameObjects() {
     let self = this
-    return this.objects.map((o, oi) => {
-      return new GameObject(self, oi)
+    let objs= [...this.objects.values()]
+    return objs.map((o) => {
+      return new GameObject(self, o.id)
     })
   }
   destroyObject(id) {
-    let oi = this.objects.findIndex(o => o.id == id)
-    if (oi == -1) {
-      return false
-    }
 
-    this.objects.splice(oi, 1)
+    this.objects.delete(id)
     return true
   }
   updateObject(id, edit) {
-    let oi = this.objects.findIndex(o => o.id == id)
-    if (oi == -1) {
-      return false
-    }
-    this.objects[oi] = {
-      ...this.objects[oi],
-      ...edit
-    }
 
-    return new GameObject(this, oi)
+    this.objects.set(id,{
+      ...this.objects.get(id),
+      ...edit
+    })
+
+    return new GameObject(this, id)
   }
   dispatch(ue, ...arg) {
 
@@ -132,10 +125,10 @@ exports.Scene = class Scene {
     setInterval(async () => {
       await physicsTick(self)
 
-      self.dispatch("upgrades", self.objects)
+      self.dispatch("upgrades", [...self.objects.values()])
     }, 1000 / 30)
     setInterval(() => {
-      self.dispatch("leaderboard", self.objects.filter(o => o.type == "PLAYER").sort((a, b) => b.xp - a.xp).slice(0, 10).map((l, li) => `${li+1}. ${l.nickname} - ${l.xp}xp <br>`).join(""))
+      self.dispatch("leaders",  [...self.objects.values()].filter(o => o.type == "PLAYER").sort((a, b) => b.xp - a.xp).slice(0, 10).map((l, li) => `${li+1}. ${l.nickname} - ${l.xp}xp <br>`).join(""))
 
 
     }, 1000)

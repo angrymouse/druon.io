@@ -14,14 +14,27 @@ let hitTests={
 
 let handleByType={
 "BULLET":async (bullet,collider)=>{
-  bullet.destroy()
+
+  switch (collider.data.type) {
+    case "PLAYER":
+      let angle=calcAngle({x:bullet.data.x,y:bullet.data.y},{x:collider.data.x,y:collider.data.y})
+      let move=calcV(angle,(bullet.data.speed+collider.data.speed)/2)
+
+      collider.plusProp("x",Math.round(move.x))
+      collider.plusProp("y",Math.round(move.y))
+
+      break;
+    default:
+return
+  }
+    bullet.destroy()
 },
 "PLAYER":async(player,collider)=>{
 
   switch (collider.data.type) {
     case "PLAYER":
       let angle=calcAngle({x:player.data.x,y:player.data.y},{x:collider.data.x,y:collider.data.y})
-      let move=calcV(angle,(player.data.speed+collider.data.speed)/2,true)
+      let move=calcV(angle,(player.data.speed+collider.data.speed)/4,true)
       player.plusProp("x",Math.round(move.x/4))
       player.plusProp("y",Math.round(move.y/4))
       collider.plusProp("x",Math.round(-move.x))
