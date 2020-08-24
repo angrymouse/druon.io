@@ -21,7 +21,7 @@ global.fps = 30;
   global.players = []
   io.of("/game").on("connection", async (socket) => {
     socket.on("spawn", async (nickname) => {
-      if (nickname.trim() == "") {
+      if (nickname.trim() == ""||!nickname) {
         nickname = "druon.io"
       }
       socket.sprite = scene.addPlayer("tank", socket, {

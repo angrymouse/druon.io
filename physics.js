@@ -54,7 +54,12 @@ let collides=obj.scene.gameObjects.filter(go=>{
 for (var collider of collides) {
   await  handleByType[obj.data.type](obj,collider)
 }
-
+if(obj.data.type=="PLAYER"){
+  
+  if(obj.data.effects.includes("heal")&&obj.data.hp<obj.data.maxHp){
+    obj.plusProp("hp",0.1)
+  }
+}
 
 
 return true

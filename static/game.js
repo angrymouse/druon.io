@@ -7,7 +7,7 @@ let oldState = []
 let newState = []
 let sprites = new Map()
 let oAttributes = new Map()
-let textures=new Map()
+let textures = new Map()
 let destroing = []
 let currentOffset = {
   x: 0,
@@ -19,15 +19,17 @@ let offsettingTo = {
 }
 let me;
 window.messages = []
-function fetchTexture(path){
-  if(textures.get(path)){
+
+function fetchTexture(path) {
+  if (textures.get(path)) {
     return textures.get(path)
-  }else{
-    let texture=PIXI.Texture.from("/assets/"+path)
-    textures.set(path,texture)
+  } else {
+    let texture = PIXI.Texture.from("/assets/" + path)
+    textures.set(path, texture)
     return texture
   }
 }
+
 function genId(prefix) {
   if (!prefix) {
     prefix = "unk"
@@ -112,7 +114,7 @@ async function play() {
 
     let oMap = oAttributes.get(author.id)
     let bId = "message"
-    if(oMap.get(bId)){
+    if (oMap.get(bId)) {
       app.stage.removeChild(oMap.get(bId).sprite)
       clearTimeout(oMap.get(bId).timeout)
     }
@@ -123,10 +125,10 @@ async function play() {
       timeout: setTimeout(() => {
         oMap.delete(bId)
         app.stage.removeChild(text)
-        oAttributes.set(author.id,oMap)
+        oAttributes.set(author.id, oMap)
       }, 5000)
     })
-    oAttributes.set(author.id,oMap)
+    oAttributes.set(author.id, oMap)
     app.stage.addChild(text)
 
 
@@ -181,7 +183,7 @@ async function play() {
 
       if (!sprite) {
 
-        sprite = new PIXI.Sprite(fetchTexture("skins/"+obj.skin))
+        sprite = new PIXI.Sprite(fetchTexture("skins/" + obj.skin))
 
         sprite.id = obj.id
         sprite.anchor.set(0.5, 0.5)
@@ -190,7 +192,7 @@ async function play() {
         sprite.width = obj.width ? obj.width : obj.size
         sprite.height = obj.height ? obj.height : obj.size
         oAttributes.set(obj.id, new Map())
-        if(obj.type=="PLAYER"){
+        if (obj.type == "PLAYER") {
           let nickStyle = new PIXI.TextStyle({
 
             fill: "#056676",
@@ -204,27 +206,44 @@ async function play() {
             fontSize: 12
           });
           let nickname = new PIXI.Text(obj.nickname, nickStyle);
-  let xp = new PIXI.Text(obj.xp+"xp",xpStyle);
+          let xp = new PIXI.Text(obj.xp + "xp", xpStyle);
           nickname.anchor.set(0.5, 0.5)
-  xp.anchor.set(0.5, 0.5)
+          xp.anchor.set(0.5, 0.5)
           let oMap = oAttributes.get(obj.id)
-
-
-          oMap.set("nickname", {
-            x: -xp.width/2,
-            y: 40,
-            id:"nickname",
-            sprite: nickname
+          let healthFull = drawRect(0x4a7785, sprite.width / 2, 10)
+          let healthCurrent = drawRect(0x38da4d, ((sprite.width / 2) / obj.maxHp) * obj.hp , 10)
+          let oj = [{
+              x: -xp.width / 2,
+              y: 40,
+              id: "nickname",
+              sprite: nickname
+            },
+            {
+              x: -sprite.width / 4,
+              y: 60,
+              id: "healthFull",
+              sprite: healthFull
+            },
+            {
+              x: -sprite.width / 4,
+              y: 60,
+              id: "healthCurrent",
+              sprite: healthCurrent
+            },
+            {
+              x: nickname.width - (xp.width / 2),
+              y: 41,
+              id: "xp",
+              sprite: xp
+            }
+          ];
+          oj.forEach(o => {
+            oMap.set(o.id, o)
+            app.stage.addChild(o.sprite)
           })
-          oMap.set("xp", {
-            x: nickname.width-(xp.width/2),
-            y: 41,
-            id:"xp",
-            sprite: xp
-          })
-          oAttributes.set(obj.id,oMap)
-          app.stage.addChild(nickname)
-          app.stage.addChild(xp)
+
+          oAttributes.set(obj.id, oMap)
+
         }
       }
       sprite.position.set(obj.x, obj.y)
@@ -240,9 +259,11 @@ async function play() {
       let attributes = oAttributes.get(obj.id)
       let vals = [...attributes.values()]
       vals.forEach((a) => {
-        if(a.id=="xp"){
-          a.sprite.text=obj.xp+"xp"
-        }
+        if (a.id == "xp") {
+          a.sprite.text = obj.xp + "xp"
+        }else if (a.id == "healthCurrent") {
+            a.sprite.width=(sprite.width/2)/obj.maxHp*obj.hp
+          }
         a.sprite.position.set(sprite.position.x + a.x, sprite.position.y + a.y)
       });
 
@@ -311,4 +332,21 @@ async function play() {
 }
 window.onresize = () => {
   app.renderer.resize(window.innerWidth, window.innerHeight);
+}
+
+function drawRect(color, width, height, borderSize, borderColor) {
+  var graphics = new PIXI.Graphics();
+  if (!borderSize) {
+    borderSize = 0
+  }
+  if (!borderColor) {
+    borderColor = 0x00000000
+  }
+  graphics.beginFill(color);
+
+  graphics.lineStyle(borderSize, borderColor);
+
+  graphics.drawRect(0, 0, width, height);
+  return graphics
+
 }

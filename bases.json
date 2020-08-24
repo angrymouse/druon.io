@@ -1,11 +1,13 @@
 {
   "tank":{
     "startXp":1,
-    "hp":10,
+    "hp":1,
     "shotTimeout":1000,
     "skin":"tank.svg",
-
+"maxHp":10,
+"effects":["heal"],
     "speed":7,
     "bullet":"fire"
+
   }
 }
