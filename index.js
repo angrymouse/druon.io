@@ -17,8 +17,7 @@ global.fps = 30;
 
   });
   global.scene = new Scene(io, bases)
-  global.objects = []
-  global.players = []
+
   io.of("/game").on("connection", async (socket) => {
     socket.on("spawn", async (nickname) => {
       if (nickname.trim() == ""||!nickname) {

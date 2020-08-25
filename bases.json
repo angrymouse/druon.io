@@ -1,7 +1,7 @@
 {
   "tank":{
     "startXp":1,
-    "hp":1,
+    "hp":8,
     "shotTimeout":1000,
     "skin":"tank.svg",
 "maxHp":10,

@@ -3,6 +3,7 @@ let time = Date.now()
 if (nickname) {
   document.getElementById('nickname').value = nickname
 }
+
 let oldState = []
 let newState = []
 let sprites = new Map()
@@ -50,33 +51,45 @@ async function startGame() {
   app.view.id = "game"
   app.renderer.backgroundColor = 0x575757
   document.body.appendChild(app.view);
-  PIXI.Loader.shared
-    .add([
-      "/assets/druon-grid.png",
-      "/assets/skins/tank.svg",
-      "/assets/skins/bullet-fire.svg",
-      "/assets/skins/ertu-skin.svg",
-      "/assets/skins/ertu-bullet.svg"
-    ])
-    .load(play);
+play()
 }
+
 async function play() {
+
   const background = new PIXI.TilingSprite(
-    PIXI.Loader.shared.resources["/assets/druon-grid.png"].texture,
+   fetchTexture("druon-grid.png"),
     10000,
     10000,
   );
   app.stage.addChild(background);
 
-  let socket = io("/game")
+  window.socket = io("/game")
   socket.emit("spawn", nickname)
+  socket.on("disconnect",()=>{
+    document.body.removeChild(app.view);
+    // app.stage.destroy()
+    // app.renderer.destroy()
+    app.destroy()
+    delete window.socket
+   window.onkeyup=()=>{}
+    window.onkeydown=()=>{}
+  sprites = new Map()
+  oAttributes = new Map()
+    textures = new Map()
+   destroing = []
+   newState=[]
+    document.getElementById("welcome").style.display = "inline-block"
+    document.getElementById("interface").style.display = "none"
+    clearInterval(pi);
 
+Object.keys(PIXI.utils.TextureCache).forEach(function(texture) {  PIXI.utils.TextureCache[texture].destroy(true);});
+  })
   socket.on("id", (id) => {
     window.id = id
   })
   app.stage.interactive = true
   socket.emit("pingx", Date.now())
-  setInterval(() => {
+  window.pi=setInterval(() => {
     time = Date.now()
     socket.emit("pingx", Date.now())
   }, 1000)
@@ -178,6 +191,7 @@ async function play() {
   }
 
   app.ticker.add(async (delta) => {
+    if(!socket){return}
     for (let obj of newState) {
       let sprite = sprites.get(obj.id)
 
@@ -211,7 +225,7 @@ async function play() {
           xp.anchor.set(0.5, 0.5)
           let oMap = oAttributes.get(obj.id)
           let healthFull = drawRect(0x4a7785, sprite.width / 2, 10)
-          let healthCurrent = drawRect(0x38da4d, ((sprite.width / 2) / obj.maxHp) * obj.hp , 10)
+          let healthCurrent = drawRect(0x38da4d, ((sprite.width / 2) / obj.maxHp) * obj.hp, 10)
           let oj = [{
               x: -xp.width / 2,
               y: 40,
@@ -261,9 +275,14 @@ async function play() {
       vals.forEach((a) => {
         if (a.id == "xp") {
           a.sprite.text = obj.xp + "xp"
-        }else if (a.id == "healthCurrent") {
-            a.sprite.width=(sprite.width/2)/obj.maxHp*obj.hp
-          }
+        } else if (a.id == "healthCurrent") {
+          a.sprite.width = (sprite.width / 2) / obj.maxHp * obj.hp
+
+          a.sprite.visible = !(obj.hp >= obj.maxHp)
+
+        } else if (a.id == "healthFull") {
+          a.sprite.visible = !(obj.hp >= obj.maxHp)
+        }
         a.sprite.position.set(sprite.position.x + a.x, sprite.position.y + a.y)
       });
 
@@ -300,9 +319,11 @@ async function play() {
     })
 
     toDestroy.forEach((sprite, i) => {
+
       destroing.push(sprite)
 
       setTimeout(() => {
+          if(!socket||!app.stage){return}
         let index = destroing.findIndex(s => s.id == sprite.id)
 
         destroing.splice(index, 1)
@@ -317,6 +338,15 @@ async function play() {
       if (!sp) {
         return
       }
+      let aatr = oAttributes.get(sp.id);
+      if(aatr){
+        [...aatr.values()].forEach(v => {
+          app.stage.removeChild(v.sprite);
+        aatr.delete(v.id)
+        })
+        oAttributes.set(sp.id,aatr)
+      }
+
       sp.alpha -= 0.03 * delta
       sp.scale.x += 0.01 * delta
       sp.scale.y += 0.01 * delta

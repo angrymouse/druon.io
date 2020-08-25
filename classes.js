@@ -28,7 +28,7 @@ class GameObject {
     })
   }
   get socket() {
-    return this.scene.sockets.find(c => c.id == this.id) || null
+    return this.scene.sockets.get(this.id) || null
   }
 }
 exports.Scene = class Scene {
@@ -36,7 +36,7 @@ exports.Scene = class Scene {
     this.objects = new Map()
     this.io = io
     this.bases = bases
-    this.sockets = []
+    this.sockets = new Map()
     this.startPE()
   }
   addObject(type, params) {
@@ -49,8 +49,8 @@ exports.Scene = class Scene {
       rotation: 0,
       id: genId("dr"),
       rp: 0,
-      x: Math.rand(10, 9990),
-      y: Math.rand(10, 9990),
+      x: 200,//Math.rand(10, 9990),
+      y: 200,//Math.rand(10, 9990),
       hitbox:"circle",
       ...params
 
@@ -65,7 +65,7 @@ exports.Scene = class Scene {
     let baseObj = bases[base]
     socket.id = id
     socket.emit("id", id)
-    this.sockets.push(socket)
+    this.sockets.set(id,socket)
     return this.addObject("PLAYER", {
       id: id,
       base: base,
@@ -108,18 +108,9 @@ exports.Scene = class Scene {
   dispatch(ue, ...arg) {
 
 
-    this.sockets.forEach(async socket => socket.emit(ue, ...arg))
+    [...this.sockets.values()].forEach(async socket => socket.emit(ue, ...arg))
   }
-  dispatchExclude(exclude, ue, ...arg) {
-    this.sockets.filter(s => s.id !== exclude).forEach(async socket => socket.emit(ue, ...arg))
-  }
-  dispatchOne(id, ue, ...arg) {
-    let socket = this.sockets.find(s => s.id == id);
-    if (!socket) {
-      return
-    }
-    socket.emit(ue, ...arg)
-  }
+
   startPE() {
     let self = this
     setInterval(async () => {

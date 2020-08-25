@@ -1,5 +1,6 @@
 {
   "asi":true,
   "esversion":11,
-  "loopfunc":true
+  "loopfunc":true,
+  "-W018":true
 }

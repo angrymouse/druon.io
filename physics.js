@@ -22,7 +22,7 @@ let handleByType={
 
       collider.plusProp("x",Math.round(move.x))
       collider.plusProp("y",Math.round(move.y))
-
+      collider.plusProp("hp",-bullet.data.damage)
       break;
     default:
 return
@@ -47,17 +47,27 @@ return
 }
 }
 exports.handleCollisions=async (obj)=>{
+    if(!obj.data){return}
+
 let collides=obj.scene.gameObjects.filter(go=>{
-  if(go.id==obj.id){return false}
+  if(go.id==obj.id||!go.data){return false}
   return  hitTests[go.data.hitbox][obj.data.hitbox](go,obj)
 })
 for (var collider of collides) {
+if(!collider.data){return}
   await  handleByType[obj.data.type](obj,collider)
 }
+  if(!obj.data){return}
 if(obj.data.type=="PLAYER"){
-  
+
   if(obj.data.effects.includes("heal")&&obj.data.hp<obj.data.maxHp){
-    obj.plusProp("hp",0.1)
+
+     obj.data.hp=parseFloat(Number(obj.data.hp+0.01).toFixed(2))
+
+  }
+  if(obj.data.hp<0){
+    obj.socket.disconnect(true)
+    obj.destroy()
   }
 }
 
