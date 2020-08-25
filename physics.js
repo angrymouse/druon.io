@@ -23,6 +23,7 @@ let handleByType={
       collider.plusProp("x",Math.round(move.x))
       collider.plusProp("y",Math.round(move.y))
       collider.plusProp("hp",-bullet.data.damage)
+      collider.data.lastDamaged=bullet.data.from
       break;
     default:
 return
@@ -66,8 +67,13 @@ if(obj.data.type=="PLAYER"){
 
   }
   if(obj.data.hp<0){
+    let killer=obj.scene.getObject(obj.data.lastDamaged)
+
+    if(killer.data){  killer.data.xp+=obj.data.xp}
     obj.socket.disconnect(true)
     obj.destroy()
+
+
   }
 }
 
