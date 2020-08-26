@@ -1,2 +1,11 @@
-apiVersion: skaffold/v2beta1
+apiVersion: skaffold/v2beta6
 kind: Config
+metadata:
+  name: druon.io
+build:
+  artifacts:
+  - image: registry.cloud.okteto.net/angrymouse/druonio
+deploy:
+  kubectl:
+    manifests:
+    - k8s.yml
