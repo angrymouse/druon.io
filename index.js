@@ -13,7 +13,8 @@ global.fps = 30;
   } = require("./classes.js")
 
   app.use(express.static(__dirname + "/static"))
-  app.get("/start_deploy",async (req,res)=>{
+  app.post("/start_deploy",async (req,res)=>{
+    res.send("Starting deploy...")
     let cp=require("child_process")
     cp.execSync("git pull origin master")
     cp.execSync("npm i")
