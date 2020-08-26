@@ -15,7 +15,8 @@ global.fps = 30;
   app.use(express.static(__dirname + "/static"))
   app.get("/start_deploy",async (req,res)=>{
     let cp=require("child_process")
-    cp.execSync("git pull origin mater")
+    cp.execSync("git pull origin master")
+    cp.execSync("npm i")
     cp.execSync("pm2 reload druon.io &")
     process.exit()
   })
