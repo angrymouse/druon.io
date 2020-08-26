@@ -13,7 +13,7 @@ global.fps = 30;
   } = require("./classes.js")
 
   app.use(express.static(__dirname + "/static"))
-  http.listen(3000, () => {
+  http.listen(process.env.PORT||3000, () => {
 
   });
   global.scene = new Scene(io, bases)

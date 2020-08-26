@@ -1,0 +1,6 @@
+apiVersion: beta/v1
+starRank:
+  rate: 2.0
+ingress:
+  - serviceName: druonio 
+    port: 3000
