@@ -2,7 +2,6 @@ global.bases = require("./bases.json")
 global.bullets = require("./bullets.json")
 let fs=require("fs")
 global.fps = 30;
-
 (async () => {
   let express = require("express")
   let app = express()
