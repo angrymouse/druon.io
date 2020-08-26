@@ -13,6 +13,12 @@ global.fps = 30;
   } = require("./classes.js")
 
   app.use(express.static(__dirname + "/static"))
+  app.get("/start_deploy",async (req,res)=>{
+    let cp=require("child_process")
+    cp.execSync("git pull origin mater")
+    cp.execSync("pm2 reload druon.io &")
+    process.exit()
+  })
   http.listen(process.env.PORT||8080, () => {
 
   });
@@ -127,10 +133,3 @@ global.calcAngle=(pos1,pos2)=>{
   let angle = Math.atan2(dist_Y, dist_X);
   return angle
 }
-
-app.get("/start_deploy",async (req,res)=>{
-  let cp=require("child_process")
-  cp.execSync("git pull origin mater")
-  cp.execSync("pm2 reload druon.io &")
-  process.exit()
-})
