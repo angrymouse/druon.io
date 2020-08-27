@@ -7,8 +7,7 @@
 "maxHp":10,
 "effects":["heal"],
     "speed":7,
-    "bullet":"fire",
-    "lastDamaged":null
+    "bullet":"fire"
 
   }
 }

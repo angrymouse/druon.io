@@ -1,4 +1,6 @@
-let {handleCollisions}=require("./physics.js")
+let {
+  handleCollisions
+} = require("./physics.js")
 class GameObject {
   constructor(scene, id) {
     this.scene = scene
@@ -8,8 +10,8 @@ class GameObject {
   get data() {
     return this.scene.objects.get(this.id)
   }
-  set data(edit){
-    return this.scene.objects.set(this.id,edit)
+  set data(edit) {
+    return this.scene.objects.set(this.id, edit)
   }
   destroy() {
     this.scene.destroyObject(this.id)
@@ -49,13 +51,15 @@ exports.Scene = class Scene {
       rotation: 0,
       id: genId("dr"),
       rp: 0,
-      x: 200,//Math.rand(10, 9990),
-      y: 200,//Math.rand(10, 9990),
-      hitbox:"circle",
+      x: 200, //Math.rand(10, 9990),
+      y: 200, //Math.rand(10, 9990),
+      hitbox: "circle",
+      lastDamaged: null,
+      energies: new Map(),
       ...params
 
     }
-    this.objects.set(ob.id,ob)
+    this.objects.set(ob.id, ob)
 
 
     return this.getObject(ob.id)
@@ -65,14 +69,14 @@ exports.Scene = class Scene {
     let baseObj = bases[base]
     socket.id = id
     socket.emit("id", id)
-    this.sockets.set(id,socket)
+    this.sockets.set(id, socket)
     return this.addObject("PLAYER", {
       id: id,
       base: base,
       lastShot: 0,
       shotting: false,
       xp: 1,
-      hitbox:"circle",
+      hitbox: "circle",
       size: 100,
       rotation: 0,
       nickname: other.nickname || "druon.io",
@@ -86,7 +90,7 @@ exports.Scene = class Scene {
   }
   get gameObjects() {
     let self = this
-    let objs= [...this.objects.values()]
+    let objs = [...this.objects.values()]
     return objs.map((o) => {
       return new GameObject(self, o.id)
     })
@@ -98,7 +102,7 @@ exports.Scene = class Scene {
   }
   updateObject(id, edit) {
 
-    this.objects.set(id,{
+    this.objects.set(id, {
       ...this.objects.get(id),
       ...edit
     })
@@ -119,7 +123,7 @@ exports.Scene = class Scene {
       self.dispatch("upgrades", [...self.objects.values()])
     }, 1000 / 30)
     setInterval(() => {
-      self.dispatch("leaders",  [...self.objects.values()].filter(o => o.type == "PLAYER").sort((a, b) => b.xp - a.xp).slice(0, 10).map((l, li) => `${li+1}. ${l.nickname} - ${l.xp}xp <br>`).join(""))
+      self.dispatch("leaders", [...self.objects.values()].filter(o => o.type == "PLAYER").sort((a, b) => b.xp - a.xp).slice(0, 10).map((l, li) => `${li+1}. ${l.nickname} - ${l.xp}xp <br>`).join(""))
 
 
     }, 1000)
@@ -129,13 +133,26 @@ exports.Scene = class Scene {
 
 async function physicsTick(scene) {
   scene.gameObjects.forEach(async (obj, i) => {
-    let canMove=await handleCollisions(obj)
+    let canMove = await handleCollisions(obj)
 
-      if(!obj||!obj.data){return}
-    let uV = calcV(obj.data.rotation, obj.data.rp, true)
-    obj.plusProp("x", obj.data.velocity.x + Math.round(uV.x))
-    obj.plusProp("y", obj.data.velocity.y + Math.round(uV.y))
+    if (!obj || !obj.data) {
+      return
+    }
+    [...obj.data.energies.entries()].forEach((item, i) => {
+      if (item[1].expireAt < Date.now()) {
+        obj.data.energies.delete(item[0])
+      }
+    });
+    let absoluteMovements = [...obj.data.energies.values()].reduce((vea, ener) => {
+      return {
+        x: vea.x + ener.x,
+        y: vea.y + ener.y
+      }
+    }, obj.data.velocity)
 
+    obj.plusProp("x", absoluteMovements.x)
+    obj.plusProp("y", absoluteMovements.y)
+    obj.set("absoluteMovements",absoluteMovements)
     let exp = require("./psy_tests.js")(obj)
     exp.forEach((ev, i) => {
       if (ev.e) {

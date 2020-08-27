@@ -3,6 +3,7 @@ global.bullets = require("./json/bullets.json")
 global.fs=require("fs")
 global.express = require("express")
 global.fps = 30;
+global.discordUser=require("./json/discord.json")
 let httpsConfig={
   key: fs.readFileSync('./cert/privkey1.pem'),
  cert: fs.readFileSync('./cert/cert1.crt')

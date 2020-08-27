@@ -20,13 +20,11 @@ let handleByType={
       let angle=calcAngle({x:bullet.data.x,y:bullet.data.y},{x:collider.data.x,y:collider.data.y})
       let move=calcV(angle,(bullet.data.speed+collider.data.speed)/2)
 
-      collider.plusProp("x",Math.round(move.x))
-      collider.plusProp("y",Math.round(move.y))
+      collider.data.energies.set(genId("br"),{...move,expireAt:Date.now()+(1000/fps)})
+
       collider.plusProp("hp",-bullet.data.damage)
       collider.data.lastDamaged=bullet.data.from
       break;
-    default:
-return
   }
     bullet.destroy()
 },

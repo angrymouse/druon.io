@@ -3,9 +3,9 @@
     "skin":"bullet-fire.svg",
     "speed":20,
     "size":30,
-    "damage":3,
+    "damage":2,
     "recoil":2,
-
+"scatter":0.4,
     "hp":1,
     "alive":500
   }

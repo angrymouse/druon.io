@@ -109,8 +109,8 @@ let server=servers.get(document.getElementById("select-server").value)+"game"
     document.getElementById("ping").innerHTML = Date.now() - time + "ms"
   })
   app.stage.on("mousemove", (event) => {
-    var dist_Y = (app.screen.height / 2) + currentOffset.y - event.data.global.y;
-    var dist_X = (app.screen.width / 2) + currentOffset.x - event.data.global.x;
+    var dist_Y = (app.screen.height / 2) - currentOffset.y - event.data.global.y;
+    var dist_X = (app.screen.width / 2) - currentOffset.x - event.data.global.x;
     var angle = Math.atan2(dist_Y, dist_X);
 
     socket.emit("rotate", angle)
@@ -280,7 +280,7 @@ let server=servers.get(document.getElementById("select-server").value)+"game"
       sprite.height = obj.height ? obj.height : obj.size
       if (obj.id == id) {
         me = sprite
-        offsettingTo = obj.velocity
+        offsettingTo = obj.absoluteMovements
         app.stage.pivot.set(currentOffset.x + me.position.x - (app.screen.width / 2), currentOffset.y + me.position.y - (app.screen.height / 2))
       }
 
@@ -373,7 +373,7 @@ let server=servers.get(document.getElementById("select-server").value)+"game"
     if (!me) {
       return
     }
-    document.getElementById("cords").innerHTML = "X - " + me.position.x + " | Y - " + me.position.y
+    document.getElementById("cords").innerHTML = "X - " + Math.round(me.position.x) + " | Y - " + Math.round(me.position.y)
   }, 3000)
 }
 window.onresize = () => {

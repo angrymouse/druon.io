@@ -30,21 +30,24 @@ module.exports=(obj)=>{
       a:async ()=>{
         obj.set("lastShot",Date.now())
         let bullet=bullets[obj.data.bullet]
-
+bullet.rotation=obj.data.rotation+((Math.random()-Math.random())*bullet.scatter)
     let bo=  obj.scene.addObject("BULLET",{
         ...bullet,
         from:obj.data.id,
         x:obj.data.x-Math.cos(obj.data.rotation)*50,
         y:obj.data.y-Math.sin(obj.data.rotation)*50,
-    rotation:obj.data.rotation,
-    velocity:calcV(obj.data.rotation,bullet.speed),
+
+    velocity:calcV(bullet.rotation,bullet.speed),
         id:genId("bullet")
       })
-      obj.set("rp",bullet.recoil)
+      let recoilId=genId("recoil")
+      let recoilPower={
+        expireAt:Date.now()+Math.min(500,bullet.alive/4),
+        ...calcV(bullet.rotation,bullet.recoil,true)
+      }
+      obj.data.energies.set(recoilId,recoilPower)
       setTimeout(()=>{bo.destroy()},bullet.alive)
-      setTimeout(()=>{
-        obj.set("rp",0)
-      },Math.min(bullet.alive/4,500))
+
 
 
       }
