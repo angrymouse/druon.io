@@ -12,6 +12,11 @@ let httpsConfig={
   let https = require('https').createServer(httpsConfig,app);
   let http = require('http').createServer(app);
   let io
+  app.use((req,res,next)=>{
+    res.header("Access-Control-Allow-Origin","*")
+    res.header("Access-Control-Allow-Methods","*")
+    next()
+  })
   if(process.env.KINTO){
      io = require("socket.io")(http)
   }else{
