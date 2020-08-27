@@ -1,5 +1,5 @@
 module.exports=(obj)=>{
-  let bullets=require("./bullets.json")
+  let bullets=require("../json/bullets.json")
 
   return [{
       e: obj.data.x > 9990,
