@@ -8,6 +8,7 @@ let servers = new Map([
   ["Localhost", "/"],
   ["Amsterdam #1", "wss://druonio.bravery.fun/"]
 ])
+
 if(window.location.host!="localhost:8080"){
   servers.delete("Localhost")
 }
