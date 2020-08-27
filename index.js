@@ -2,11 +2,14 @@ global.bases = require("./bases.json")
 global.bullets = require("./bullets.json")
 let fs=require("fs")
 global.fps = 30;
-
+let httpsConfig={
+  key: fs.readFileSync('./cert/privkey1.pem'),
+ cert: fs.readFileSync('./cert/cert1.crt')
+};
 (async () => {
   let express = require("express")
   let app = express()
-  let http = require('http').createServer(app);
+  let http = require('https').createServer(httpsConfig,app);
   let io = require("socket.io")(http)
   let {
     Scene,
