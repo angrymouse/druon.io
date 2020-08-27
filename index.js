@@ -9,8 +9,15 @@ let httpsConfig={
 (async () => {
   let express = require("express")
   let app = express()
-  let http = require('https').createServer(httpsConfig,app);
-  let io = require("socket.io")(http)
+  let https = require('https').createServer(httpsConfig,app);
+  let http = require('http').createServer(app);
+  let io
+  if(process.env.KINTO){
+     io = require("socket.io")(http)
+  }else{
+     io = require("socket.io")(https)
+  }
+
   let {
     Scene,
     GameObject
@@ -25,7 +32,10 @@ let httpsConfig={
     cp.execSync("pm2 reload druon.io &")
     process.exit()
   })
-  http.listen(process.env.PORT||8080, () => {
+  http.listen(3000, () => {
+
+  });
+  https.listen(process.env.PORT||8080, () => {
 
   });
   global.scene = new Scene(io, bases)
