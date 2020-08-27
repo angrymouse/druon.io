@@ -4,9 +4,9 @@ if (nickname) {
   document.getElementById('nickname').value = nickname
 }
 let servers = new Map([
-  ["Kharkiv #1", "ws://subox.pp.ua:2026/"],
+  ["Kharkiv #1", "wss://kh1.bravery.fun:2026/"],
   ["Localhost", "/"],
-  ["Amsterdam #1", "wss://druonio.mice.co.ua/"]
+  ["Amsterdam #1", "wss://druonio.bravery.fun/"]
 ])
 if(window.location.host!="localhost:8080"){
   servers.delete("Localhost")
