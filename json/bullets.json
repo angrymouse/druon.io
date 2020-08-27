@@ -4,7 +4,7 @@
     "speed":20,
     "size":30,
     "damage":3,
-    "recoil":10,
+    "recoil":2,
 
     "hp":1,
     "alive":500
