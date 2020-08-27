@@ -3,7 +3,16 @@ let time = Date.now()
 if (nickname) {
   document.getElementById('nickname').value = nickname
 }
-
+let servers = new Map([
+  ["Kharkiv #1", "ws://subox.pp.ua:2026/"],
+  ["Localhost", "/"],
+  ["Amsterdam #1", "wss://druonio.mice.co.ua/"]
+])
+if(window.location.host!="localhost:8080"){
+  servers.delete("Localhost")
+}
+let selectCode=[...servers.keys()].map(s=>`<option>${s}</option>`).join("")
+document.getElementById("select-server").innerHTML=selectCode
 let oldState = []
 let newState = []
 let sprites = new Map()
@@ -51,45 +60,47 @@ async function startGame() {
   app.view.id = "game"
   app.renderer.backgroundColor = 0x575757
   document.body.appendChild(app.view);
-play()
+  play()
 }
 
 async function play() {
 
   const background = new PIXI.TilingSprite(
-   fetchTexture("druon-grid.png"),
+    fetchTexture("druon-grid.png"),
     10000,
     10000,
   );
   app.stage.addChild(background);
-
-  window.socket = io("/game")
+let server=servers.get(document.getElementById("select-server").value)+"game"
+  window.socket = io(server)
   socket.emit("spawn", nickname)
-  socket.on("disconnect",()=>{
+  socket.on("disconnect", () => {
     document.body.removeChild(app.view);
     // app.stage.destroy()
     // app.renderer.destroy()
     app.destroy()
     delete window.socket
-   window.onkeyup=()=>{}
-    window.onkeydown=()=>{}
-  sprites = new Map()
-  oAttributes = new Map()
+    window.onkeyup = () => {}
+    window.onkeydown = () => {}
+    sprites = new Map()
+    oAttributes = new Map()
     textures = new Map()
-   destroing = []
-   newState=[]
+    destroing = []
+    newState = []
     document.getElementById("welcome").style.display = "inline-block"
     document.getElementById("interface").style.display = "none"
     clearInterval(pi);
 
-Object.keys(PIXI.utils.TextureCache).forEach(function(texture) {  PIXI.utils.TextureCache[texture].destroy(true);});
+    Object.keys(PIXI.utils.TextureCache).forEach(function(texture) {
+      PIXI.utils.TextureCache[texture].destroy(true);
+    });
   })
   socket.on("id", (id) => {
     window.id = id
   })
   app.stage.interactive = true
   socket.emit("pingx", Date.now())
-  window.pi=setInterval(() => {
+  window.pi = setInterval(() => {
     time = Date.now()
     socket.emit("pingx", Date.now())
   }, 1000)
@@ -191,7 +202,9 @@ Object.keys(PIXI.utils.TextureCache).forEach(function(texture) {  PIXI.utils.Tex
   }
 
   app.ticker.add(async (delta) => {
-    if(!socket){return}
+    if (!socket) {
+      return
+    }
     for (let obj of newState) {
       let sprite = sprites.get(obj.id)
 
@@ -323,7 +336,9 @@ Object.keys(PIXI.utils.TextureCache).forEach(function(texture) {  PIXI.utils.Tex
       destroing.push(sprite)
 
       setTimeout(() => {
-          if(!socket||!app.stage){return}
+        if (!socket || !app.stage) {
+          return
+        }
         let index = destroing.findIndex(s => s.id == sprite.id)
 
         destroing.splice(index, 1)
@@ -339,12 +354,12 @@ Object.keys(PIXI.utils.TextureCache).forEach(function(texture) {  PIXI.utils.Tex
         return
       }
       let aatr = oAttributes.get(sp.id);
-      if(aatr){
+      if (aatr) {
         [...aatr.values()].forEach(v => {
           app.stage.removeChild(v.sprite);
-        aatr.delete(v.id)
+          aatr.delete(v.id)
         })
-        oAttributes.set(sp.id,aatr)
+        oAttributes.set(sp.id, aatr)
       }
 
       sp.alpha -= 0.03 * delta

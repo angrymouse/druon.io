@@ -169,6 +169,17 @@ input{
   background-color: rgba(242, 166, 98, 0.5);
   color:#fff;
 }
+#select-server{
+  margin-top: 10px;
+  border-radius: 10px;
+  padding:10px;
+  font-size: 16px;
+  font-weight: 700;
+  
+  width:50%;
+  color:#FF931E;
+  background-color: #FCEE21;
+}
 #nickname{
 width:50%;
   font-size: 20px;
