@@ -44,6 +44,7 @@ let body=formUrlencode({
     })
     console.log(await token.text());
 })
+
   app.use(express.static(__dirname + "/static"))
   app.post("/start_deploy",async (req,res)=>{
     console.log(req.body);
