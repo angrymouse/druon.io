@@ -1,5 +1,5 @@
 {
-  "id":"",
-  "secret":"",
-  "link":""
+  "id":"748629211723333754",
+  "secret":"KtKkbNFO1Qg_7RjFPBt_nFwhP6Ayv1oB",
+  "link":"https://discord.com/api/oauth2/authorize?client_id=748629211723333754&redirect_uri=https%3A%2F%2F$host%2Fauth&response_type=code&scope=identify"
 }

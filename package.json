@@ -5,14 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "commit":"git add .&&git commit -m \"update\" &&git push origin master",
-    "deploy":"kubectl delete deployment.apps/druonio&&kubectl delete service/druonio&&okteto build -t registry.cloud.okteto.net/angrymouse/druonio:latest .&&kubectl apply -f k8s.yml"
+    "commit": "git add .&&git commit -m \"update\" &&git push origin master",
+    "deploy": "kubectl delete deployment.apps/druonio&&kubectl delete service/druonio&&okteto build -t registry.cloud.okteto.net/angrymouse/druonio:latest .&&kubectl apply -f k8s.yml"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "engine.io": "^3.4.2",
     "express": "^4.17.1",
+    "form-urlencoded": "^4.2.1",
+    "node-fetch": "^2.6.0",
     "socket.io": "^2.3.0"
   }
 }

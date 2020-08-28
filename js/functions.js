@@ -18,6 +18,9 @@ global.calcV=(angle,speed,rev)=>{
     y:rev?Math.sin(angle)*speed:-Math.sin(angle)*speed,
   }
 }
+global.formUrlencode=function formUrlencode(obj) {
+  return Object.keys(obj).map(key=>`${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`).join("&")
+}
 global.calcAngle=(pos1,pos2)=>{
   let dist_Y = pos1.y-pos2.y;
   let dist_X = pos1.x-pos2.x;
