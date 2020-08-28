@@ -11,6 +11,7 @@ let httpsConfig={
 };
 
 global.app = express()
+app.use(express.json())
 app.use((req,res,next)=>{
   res.header("Access-Control-Allow-Origin","*")
   res.header("Access-Control-Allow-Methods","*")
@@ -45,7 +46,7 @@ let body=formUrlencode({
 })
   app.use(express.static(__dirname + "/static"))
   app.post("/start_deploy",async (req,res)=>{
-    console.log(req.query);
+    console.log(req.body);
     res.send("Starting deploy...")
     let cp=require("child_process")
     cp.execSync("git pull origin master")
