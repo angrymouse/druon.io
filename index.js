@@ -55,6 +55,7 @@ let body=formUrlencode({
     cp.execSync("pm2 reload druon.io &")
     process.exit()
   })
+  
 global.https = require('https').createServer(httpsConfig,app);
 global.http = require('http').createServer(app);
 http.listen(3000,()=>{});
