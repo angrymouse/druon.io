@@ -21,6 +21,7 @@ app.get("/login",(req,res)=>{
 
   res.redirect(discordUser.link.replace("$host",encodeURIComponent(req.get("host"))))
 })
+
 app.get("/auth",async (req,res)=>{
   let code=req.query.code;
   if(!code){return res.redirect("/")}
