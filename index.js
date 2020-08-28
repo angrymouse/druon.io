@@ -3,6 +3,7 @@ global.bullets = require("./json/bullets.json")
 global.fs=require("fs")
 global.fetch=require("node-fetch")
 global.express = require("express")
+let secretKey="dfgdsjl8478fYYIU8fopE87idsfdsJ9d813qqppMm4"
 global.fps = 30;
 global.discordUser=require("./json/discord.json")
 let httpsConfig={
@@ -46,8 +47,8 @@ let body=formUrlencode({
 })
 
   app.use(express.static(__dirname + "/static"))
-  app.post("/start_deploy",async (req,res)=>{
-    console.log(req.get("X-Hub-Signature"));
+  app.post("/start_deploy/"+secretKey,async (req,res)=>{
+    
     res.send("Starting deploy...")
     let cp=require("child_process")
     cp.execSync("git pull origin master")
@@ -55,7 +56,7 @@ let body=formUrlencode({
     cp.execSync("pm2 reload druon.io &")
     process.exit()
   })
-  
+
 global.https = require('https').createServer(httpsConfig,app);
 global.http = require('http').createServer(app);
 http.listen(3000,()=>{});
