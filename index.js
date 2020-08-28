@@ -47,7 +47,7 @@ let body=formUrlencode({
 
   app.use(express.static(__dirname + "/static"))
   app.post("/start_deploy",async (req,res)=>{
-    console.log(req.body);
+    console.log(req.get("X-Hub-Signature"));
     res.send("Starting deploy...")
     let cp=require("child_process")
     cp.execSync("git pull origin master")
