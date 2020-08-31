@@ -294,12 +294,19 @@ input {
   display: var(--ua-display);
   padding-left: 10px;
   height: 40px;
+
   margin-top: 10px;
   text-align: center;
   visibility: var(--ua-visibility);
   position: relative;
   background-color: #4b5d67;
   vertical-align: baseline;
+}
+#druonio-bravery-fun_336x280{
+  position: absolute;
+  display: inline-block;
+  bottom: 0;
+  right:0;
 }
 #userdata {
   text-decoration: none;
