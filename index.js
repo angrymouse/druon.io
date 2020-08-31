@@ -81,10 +81,10 @@ let mongoClient=require("mongodb").MongoClient("mongodb://root:HippothebestDB@"+
 mongoClient.connect(function(err, client){
     if(err) return console.log(err);
     global.db=client.db("druon")
-    http.listen(3000, () => {});
-    https.listen(process.env.PORT || 8080, () => {});
-});
 
+});
+http.listen(3000, () => {});
+https.listen(process.env.PORT || 8080, () => {});
 require("./js/functions.js");
 require("./js/game.js")()
 console.log("God code: " + godcode);
