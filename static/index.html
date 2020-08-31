@@ -22,7 +22,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.3/pixi.min.js" integrity="sha512-J7UHpLx39bpqtP+aWP6yIuXroFk0XPkDQaS9zDthM4TVeaXstWYh556gxsXwwIwpAPSoKqVHW+eqz3B93SpyKg==" crossorigin="anonymous"></script>
 </head>
 
-<body class="unauthorized">
+<body >
   <div id="welcome">
     <div class="left-block">
       <div id="changelog">
@@ -48,6 +48,9 @@
     <div class="right-block">
       <a id="discord" href="https://discord.gg/ezEeGmq"> <img src="https://discord.com/assets/192cb9459cbc0f9e73e2591b700f1857.svg" alt=""></a><br />
       <a href="/login" id="login"><span>Login with</span> <img src="https://discord.com/assets/192cb9459cbc0f9e73e2591b700f1857.svg" alt=""></a>
+      <a id="userdata" href="#profile">
+
+      </a>
     </div>
 
   </div>
@@ -63,8 +66,10 @@
          <input type="text" placeholder="Chat here..." id="chat">
   </div>
   </div>
-
-  <script defer src="/game.js" charset="utf-8"></script>
+<div id="modal">
+  
+</div>
+  <script defer src="/bundle.js" charset="utf-8"></script>
 </body>
 
 </html>

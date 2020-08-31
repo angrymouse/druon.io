@@ -1,3 +1,4 @@
+(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 window.location.hash=""
 let nickname = localStorage.getItem("nickname")
 let time = Date.now()
@@ -364,3 +365,94 @@ require("./js/account.js")()
 window.onhashchange=()=>{
   require("./js/showModal.js")(window.location.hash.slice(1))
 }
+
+},{"./js/account.js":2,"./js/disconnect.js":3,"./js/drawRect.js":4,"./js/genId.js":5,"./js/showModal.js":6}],2:[function(require,module,exports){
+module.exports = async () => {
+  let token = localStorage.getItem("token")
+  if (!token) {
+    document.body.classList.add("unauthorized")
+  } else {
+    document.body.classList.add("authorized")
+    window.user = await fetch("/api/profile/" + token)
+    user = await user.json()
+
+    document.getElementById("userdata").innerHTML = `
+    <img id="userdata-avatar" src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64">
+    <span id="userdata-tag">${user.username}#${user.discriminator}</span>
+  
+    `
+  }
+}
+
+},{}],3:[function(require,module,exports){
+module.exports=()=>{document.body.removeChild(app.view);
+// app.stage.destroy()
+// app.renderer.destroy()
+app.destroy()
+delete window.socket
+window.onkeyup = () => {}
+window.onkeydown = () => {}
+sprites = new Map()
+oAttributes = new Map()
+textures = new Map()
+destroing = []
+newState = []
+document.getElementById("welcome").style.display = "inline-block"
+document.getElementById("interface").style.display = "none"
+clearInterval(pi);
+
+Object.keys(PIXI.utils.TextureCache).forEach(function(texture) {
+  PIXI.utils.TextureCache[texture].destroy(true);
+});
+}
+
+},{}],4:[function(require,module,exports){
+module.exports=function drawRect(color, width, height, borderSize, borderColor) {
+  var graphics = new PIXI.Graphics();
+  if (!borderSize) {
+    borderSize = 0
+  }
+  if (!borderColor) {
+    borderColor = 0x00000000
+  }
+  graphics.beginFill(color);
+
+  graphics.lineStyle(borderSize, borderColor);
+
+  graphics.drawRect(0, 0, width, height);
+  return graphics
+
+}
+
+},{}],5:[function(require,module,exports){
+module.exports=function genId(prefix) {
+  if (!prefix) {
+    prefix = "unk"
+  }
+  return prefix + Date.now().toString(16) + (Math.random() * 100000).toString(16)
+}
+
+},{}],6:[function(require,module,exports){
+module.exports=async(id)=>{
+    let modal=document.getElementById("modal")
+  switch (id) {
+    case "profile":
+
+    modal.style.display="block"
+    modal.innerHTML=`
+    <img id="profile-avatar" src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128">
+    <span id="profile-tag">${user.username}#${user.discriminator}</span>
+      <span id="profile-gems">Gems: ${user.gems} <i class="icon-gem"></i></span>
+      <span id="profile-maxXp">Max. XP: ${user.record} <i class="icon-trophy"></i></span>
+<span id="profile-gamesPlayed">Games played: ${user.games} <i class="icon-swords"></i></span>
+<a href="#" id="close-modal"></a>
+      `
+      return ;
+    default:
+
+      modal.style.display="none"
+      return;
+  }
+}
+
+},{}]},{},[1]);

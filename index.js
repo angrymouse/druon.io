@@ -1,6 +1,7 @@
 global.bases = require("./json/bases.json")
 global.bullets = require("./json/bullets.json")
 global.fs = require("fs")
+global.debug=fs.existsSync("./debug.txt")
 global.fetch = require("node-fetch")
 global.express = require("express")
 let secretKey = "dfgdsjl8478fYYIU8fopE87idsfdsJ9d813qqppMm4"
@@ -10,7 +11,9 @@ let httpsConfig = {
   key: fs.readFileSync('./cert/privkey1.pem'),
   cert: fs.readFileSync('./cert/cert1.crt')
 };
-
+let {
+  User
+} = require("./js/classes.js")
 global.app = express()
 app.use(express.json())
 app.use((req, res, next) => {
@@ -64,11 +67,24 @@ app.post("/start_deploy/" + secretKey, async (req, res) => {
   cp.execSync("pm2 reload druon.io &")
   process.exit()
 })
+app.get("/api/profile/:token",async (req,res)=>{
+  let user=new User(req.params.token)
+  let platformUser=await user.fetchUser()
+  if(!platformUser){return res.json({error:true})}
+  let userProfile=await user.fetchProfile()
 
+  return res.json({...platformUser,...userProfile})
+})
 global.https = require('https').createServer(httpsConfig, app);
 global.http = require('http').createServer(app);
-http.listen(3000, () => {});
-https.listen(process.env.PORT || 8080, () => {});
+let mongoClient=require("mongodb").MongoClient("mongodb://root:HippothebestDB@"+(debug?"192.168.0.6:27017":"kh1.bravery.fun:2023")+"/admin",{ useNewUrlParser: true,useUnifiedTopology:true })
+mongoClient.connect(function(err, client){
+    if(err) return console.log(err);
+    global.db=client.db("druon")
+    http.listen(3000, () => {});
+    https.listen(process.env.PORT || 8080, () => {});
+});
+
 require("./js/functions.js");
 require("./js/game.js")()
 console.log("God code: " + godcode);

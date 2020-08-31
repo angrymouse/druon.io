@@ -163,3 +163,30 @@ async function physicsTick(scene) {
   });
 
 }
+exports.User=class User {
+  constructor (token){
+    this.token=token
+    let self=this
+
+  }
+  async fetchUser(){
+    return await require("./disprofile.js")(this.token)
+  }
+  async fetchProfile(){
+    let user=await this.fetchUser()
+    if(!user){return null}
+    let profile=await db.collection("profiles").findOne({id:user.id})
+    if(!profile){
+      await db.collection("profiles").insertOne({
+        id:user.id,
+        gems:10,
+        characters:["tank"],
+        skins:[{character:"tank",skin:"default"}],
+        record:0,
+        games:0
+      })
+      profile=await db.collection("profiles").findOne({id:user.id})
+    }
+    return profile
+  }
+}

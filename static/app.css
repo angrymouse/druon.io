@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Oxygen&display=swap');
+
 #welcome {
   background-image: url(/assets/druon-grid.png);
   background-repeat: repeat;
@@ -9,34 +10,42 @@
   width: 100%;
   height: 100%;
 }
-.unauthorized{
-  --ua-display:inline-block;
-  --ua-visibility:visible
+
+.unauthorized {
+  --ua-display: inline-block;
+  --ua-visibility: visible;
+  --au-visibility: hidden;
+  --au-display: none;
 }
-.authorized{
-  --ua-display:none ;
-  --ua-visibility:hidden
+
+.authorized {
+  --ua-display: none;
+  --au-display: inline-block;
+  --ua-visibility: hidden;
+  --au-visibility: visible
 }
+
 #interface {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
-   pointer-events: none;
+  pointer-events: none;
   height: 100%;
   display: none;
   z-index: 1000;
 }
-*{
+
+* {
   font-family: 'Oxygen', sans-serif;
 }
+
 body, html {
   margin: 0;
   padding: 0
 }
 
 #changelog {
-
   height: 70vh;
   width: 300px;
   overflow-y: scroll;
@@ -47,11 +56,13 @@ body, html {
   background-color: rgba(96, 78, 62, 0.8);
   border-radius: 4px;
 }
-h1{
-  color:#fff;
+
+h1 {
+  color: #fff;
 }
+
 #leaderboard {
-   pointer-events: none;
+  pointer-events: none;
   user-select: none;
   z-index: 1000;
   height: 300px;
@@ -62,32 +73,34 @@ h1{
   position: relative;
   background-color: rgba(57, 57, 57, 0.53);
   border-radius: 4px;
+}
 
-}
-#cords{
-   pointer-events: none;
+#cords {
+  pointer-events: none;
   user-select: none;
   text-align: center;
   color: #fae3cf;
-  display:inline-block;
-  margin-top:5px;
-  width:200px;
+  display: inline-block;
+  margin-top: 5px;
+  width: 200px;
   position: relative;
   background-color: rgba(0, 0, 0, 0.53);
   border-radius: 4px;
 }
-#ping{
-   pointer-events: none;
+
+#ping {
+  pointer-events: none;
   user-select: none;
   text-align: center;
   color: #fae3cf;
-  display:inline-block;
-  margin-top:5px;
-  width:90px;
+  display: inline-block;
+  margin-top: 5px;
+  width: 90px;
   position: relative;
   background-color: rgba(0, 0, 0, 0.53);
   border-radius: 4px;
 }
+
 *::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #F5F5F5;
@@ -114,23 +127,23 @@ h1{
   display: inline-block;
   position: relative;
   width: 400px;
-
 }
 
 .right-block {
   top: 20px;
   right: 20px;
-    min-width: 200px;
-    min-height:80%;
+  min-width: 200px;
+  min-height: 80%;
   border-radius: 8px;
   position: absolute;
   display: inline-block;
 }
+
 .left-block {
   top: 20px;
   left: 20px;
-    min-width: 400px;
-    min-height:80%;
+  min-width: 400px;
+  min-height: 80%;
   border-radius: 8px;
   position: absolute;
   display: inline-block;
@@ -141,126 +154,277 @@ h1{
   left: 50%;
   background-color: rgba(96, 78, 62, 0.5);
   transform: translate(-50%);
-    min-width: 600px;
-    min-height:calc(100% - 60px);
-    padding: 10px;
-    text-align: center;
+  min-width: 600px;
+  min-height: calc(100% - 60px);
+  padding: 10px;
+  text-align: center;
   border-radius: 8px;
   position: absolute;
   display: inline-block;
 }
+
 #discord {
   background-color: #23272A;
   border-radius: 8px;
   width: 190px;
   height: 64px;
-  padding:5px;
+  padding: 5px;
   padding-bottom: 0;
   display: inline-block;
   position: relative;
 }
-#chat{
-  left:50%;
-  top:40%;
-  transform: translate(-50%,-50%);
+
+#chat {
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
   position: absolute;
   display: none;
-  color:#000
+  color: #000
 }
 
-input{
-  --webkit-appearence:none;
-  appearence:none;
-  border:none;
-  padding:10px;
+input {
+  --webkit-appearence: none;
+  appearence: none;
+  border: none;
+  padding: 10px;
   text-align: center;
   margin-top: 10px;
-
   border-radius: 8px;
   background-color: rgba(242, 166, 98, 0.5);
-  color:#fff;
+  color: #fff;
 }
-#select-server{
+
+#select-server {
   margin-top: 10px;
   border-radius: 10px;
-  padding:10px;
+  padding: 10px;
   font-size: 16px;
   font-weight: 700;
-
-  width:50%;
-  color:#FF931E;
+  width: 50%;
+  color: #FF931E;
   background-color: #FCEE21;
 }
-#nickname{
-width:50%;
+
+#nickname {
+  width: 50%;
   font-size: 20px;
 }
-.button{
-padding:10px 20px;
+
+.button {
+  padding: 10px 20px;
   font-size: 30px;
-  color:#FF931E;
+  color: #FF931E;
   background-color: #FCEE21;
-transition: all .3s;
+  transition: all .3s;
   font-weight: 700;
   cursor: pointer;
 }
-.button:hover{
+
+.button:hover {
   box-shadow: 0px 0px 0px 5px rgba(242, 166, 98, 0.5);
 }
-#nickname::placeholder{
-  color:#f2e0c2
+
+#nickname::placeholder {
+  color: #f2e0c2
 }
+
 @media screen and (max-width:1000px) {
-  .left-block{
+  .left-block {
     display: none
   }
-  .right-block{
+
+  .right-block {
     display: none;
   }
 }
-#game{
 
+#game {
   user-select: none;
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   position: absolute;
-  padding:0;
-  margin:0;
+  padding: 0;
+  margin: 0;
   display: block;
-  left:0;
-  top:0;
+  left: 0;
+  top: 0;
 }
-#login>img{
+
+#login>img {
   width: auto;
   height: 32px;
   margin-top: 6px;
   display: inline-block;
 }
-#login>span{
+
+#login>span {
   font-size: 19px;
   font-weight: 800;
   position: relative;
-  top:50%;
+  top: 50%;
   padding-right: 5px;
-  transform: translate(0,-50%);
+  transform: translate(0, -50%);
   display: inline-block;
-  float:left;
+  float: left;
   text-decoration: none;
-  color:#fff;
+  color: #fff;
   font-family: Alata;
 }
-#login{
-text-decoration: none;
-border-radius: 6px;
-padding:5px;
-display: var(--ua-display);
-padding-left: 10px;
-height:40px;
-margin-top: 10px;
-text-align: center;
-visibility: var(--ua-visibility);
 
-position: relative;
-background-color: #4b5d67;
-vertical-align: baseline;
+#login {
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 5px;
+  display: var(--ua-display);
+  padding-left: 10px;
+  height: 40px;
+  margin-top: 10px;
+  text-align: center;
+  visibility: var(--ua-visibility);
+  position: relative;
+  background-color: #4b5d67;
+  vertical-align: baseline;
+}
+#userdata {
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 5px;
+  display: var(--au-display);
+  padding-left: 10px;
+height:100px;
+  margin-top: 10px;
+  width:185px;
+    max-width:185px;
+  text-align: center;
+  visibility: var(--au-visibility);
+  position: relative;
+  background-color: #4b5d67;
+  vertical-align: baseline;
+}
+#userdata-avatar{
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #ffad41;
+  display: inline-block;
+  position: absolute;
+  left:50%;
+  transform: translate(-50%);
+  height: 64px;
+  margin-top:-2px;
+}
+#userdata-tag{
+  color:#ffad41;
+  font-size: 16px;
+  font-weight: 600;
+
+  position: absolute;
+  display: inline-block;
+
+  padding-left: 5px;
+bottom: 10px;
+left:50%;
+transform: translate(-50%);
+}
+#modal{
+  display: none;
+  border-radius: 8px;
+  border:none;
+  position: fixed;
+  left:50%;
+  top:50%;
+  transform: translate(-50%,-50%);
+  width:90vh;
+  height:50vh;
+  z-index: 99999;
+  background-color: #322f3d;
+}
+#profile-avatar{
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  position: absolute;
+  left:20px;
+
+  display: inline-block;
+width:110px;
+height:110px;
+    border:  2px solid #59405c;
+    border-top:none;
+}
+#profile-tag{
+  left:140px;
+  top:10px;
+  position: absolute;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Alata';
+  color:#4b5d67;
+}
+#profile-gems{
+    color:#68b0ab;
+    position: absolute;
+    left:140px;
+    top:40px;
+    vertical-align: baseline;
+}
+#profile-maxXp{
+    color:#e97171;
+    position: absolute;
+    left:140px;
+    top:60px;
+    vertical-align: baseline;
+}
+#profile-gamesPlayed{
+    color:#f08a5d;
+    position: absolute;
+    left:140px;
+    top:80px;
+    vertical-align: baseline;
+}
+.icon-gem{
+  background-image: url(/assets/gem.svg);
+  width:16px;
+  height:16px;
+  display: inline-block;
+  position: relative;
+
+  background-size: 100% 100%;
+
+}
+.icon-swords{
+  background-image: url(/assets/swords.svg);
+  width:16px;
+  height:16px;
+  display: inline-block;
+  position: relative;
+
+  background-size: 100% 100%;
+
+}
+.icon-trophy{
+  background-image: url(/assets/trophy.svg);
+  width:16px;
+  height:16px;
+  display: inline-block;
+  position: relative;
+
+  background-size: 100% 100%;
+
+}
+#close-modal{
+  position: absolute;
+  background-image: url(/assets/close.svg);
+  width:24px;
+  height:24px;
+  display: inline-block;
+  right:7px;
+  top:7px;
+  transition: all .4s;
+  background-size: 100% 100%;
+
+}
+#close-modal:hover{
+    background-image: url(/assets/close-hover.svg);
 }
