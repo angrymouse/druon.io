@@ -137,6 +137,7 @@ h1 {
   right: 20px;
   min-width: 200px;
   min-height: 80%;
+  float: right;
   border-radius: 8px;
   position: absolute;
   display: inline-block;
@@ -169,6 +170,7 @@ h1 {
 #discord {
   background-color: #23272A;
   border-radius: 8px;
+  float: right;
   width: 190px;
   height: 64px;
   padding: 5px;
@@ -234,16 +236,23 @@ input {
   color: #f2e0c2
 }
 
-@media screen and (max-width:1000px) {
-  .left-block {
-    display: none
-  }
+@media screen and (max-width:900px) {
+
 
   .right-block {
     display: none;
   }
 }
+@media screen and (max-width:1250px) {
+  .left-block {
+    display: none
+  }
+  .center-block{
+    left:20px !important;
+    transform: none;
+  }
 
+}
 #game {
   user-select: none;
   width: 100%;
@@ -278,6 +287,7 @@ input {
 }
 
 #login {
+  float: right;
   text-decoration: none;
   border-radius: 6px;
   padding: 5px;
@@ -300,6 +310,7 @@ input {
 height:100px;
   margin-top: 10px;
   width:185px;
+  float: right;
     max-width:185px;
   text-align: center;
   visibility: var(--au-visibility);
