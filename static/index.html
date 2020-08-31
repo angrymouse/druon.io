@@ -9,6 +9,13 @@
   <link rel="stylesheet" href="/app.css">
   <script src="/socket.io/socket.io.js" charset="utf-8"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+  <script>
+var aiptag = aiptag || {};
+aiptag.cmd = aiptag.cmd || [];
+aiptag.cmd.display = aiptag.cmd.display || [];
+aiptag.cmd.player = aiptag.cmd.player || [];
+</script>
+  	<script async src="//api.adinplay.com/libs/aiptag/pub/DRO/druonio.bravery.fun/tag.min.js"></script>
 <script>
     WebFont.load({
         google: {
@@ -43,6 +50,11 @@
 
        </select><br />
        <input onclick="startGame()" type="button" class="button" id="play" value="Play">
+       <div id='XXXXX_placement'>
+    <script type='text/javascript'>
+    aiptag.cmd.display.push(function() { aipDisplayTag.display('druonio-bravery-fun_336x280'); });
+    </script>
+</div>
      </div>
 
     <div class="right-block">
@@ -67,7 +79,7 @@
   </div>
   </div>
 <div id="modal">
-  
+
 </div>
   <script defer src="/bundle.js" charset="utf-8"></script>
 </body>
