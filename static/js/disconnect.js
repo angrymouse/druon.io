@@ -17,4 +17,5 @@ clearInterval(pi);
 Object.keys(PIXI.utils.TextureCache).forEach(function(texture) {
   PIXI.utils.TextureCache[texture].destroy(true);
 });
+require("./showVideoAd.js")()
 }

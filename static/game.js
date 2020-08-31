@@ -41,7 +41,18 @@ function fetchTexture(path) {
     return texture
   }
 }
+window.aiptag = window.aiptag || {cmd: []};
+aiptag.cmd.display = aiptag.cmd.display || [];
+aiptag.cmd.player = aiptag.cmd.player || [];
 
+//CMP tool settings
+aiptag.cmp = {
+  show: true,
+  position: "centered",  //centered, bottom
+  button: true,
+  buttonText: "Privacy settings",
+  buttonPosition: "bottom-left" //bottom-left, bottom-right, top-left, top-right
+}
 let genId=require("./js/genId.js")
 document.getElementById('nickname').oninput = function() {
   nickname = document.getElementById('nickname').value

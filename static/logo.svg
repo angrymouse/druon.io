@@ -3,54 +3,72 @@
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#ED1C24;}
-	.st1{fill:#666666;}
-	.st2{fill:#F7931E;}
-	.st3{fill:#FF353A;}
-	.st4{fill:#940004;}
-	.st5{fill:none;stroke:#ED1C24;stroke-width:5;stroke-miterlimit:10;}
-	.st6{fill:#39B54A;}
-	.st7{fill:#009245;}
-	.st8{fill:#006837;}
-	.st9{fill:#F15A24;}
-	.st10{fill:none;}
+	.st0{fill:#DCDCDC;}
+	.st1{fill:none;stroke:#8C8C8C;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:#8C8C8C;stroke-width:0.5;stroke-miterlimit:10;}
+	.st3{fill:#ED1C24;}
+	.st4{fill:#666666;}
+	.st5{fill:#F7931E;}
+	.st6{fill:#FF353A;}
+	.st7{fill:#940004;}
+	.st8{fill:none;stroke:#ED1C24;stroke-width:5;stroke-miterlimit:10;}
+	.st9{fill:#39B54A;}
+	.st10{fill:#009245;}
+	.st11{fill:#006837;}
+	.st12{fill:#F15A24;}
+	.st13{fill:none;}
 </style>
-<polyline class="st0" points="244,416.7 292,407.1 295,406.1 301,405 301,422 "/>
-<path class="st0" d="M451,388c3,3,10,18,7,25s-3,16-2,17s-13,11-12,13s-6,4-5,5s-4,7-4,7l1.6-0.1L426,465.3c0,0,0,0-0.1,0l-1.7-0.5
+<rect x="0.9" y="0.5" class="st0" width="511.1" height="511.5"/>
+<polyline class="st1" points="0,72.9 73,72.9 146,72.9 219,72.9 292,72.9 365.1,72.9 438.1,72.9 511.1,72.9 "/>
+<polyline class="st1" points="0,145.9 73,145.9 146,145.9 219,145.9 292,145.9 365.1,145.9 438.1,145.9 511.1,145.9 "/>
+<polyline class="st1" points="0,218.8 73,218.8 146,218.8 219,218.8 292,218.8 365.1,218.8 438.1,218.8 511.1,218.8 "/>
+<polyline class="st1" points="0,291.7 73,291.7 146,291.7 219,291.7 292,291.7 365.1,291.7 438.1,291.7 511.1,291.7 "/>
+<polyline class="st1" points="511.1,364.7 438.1,364.7 365.1,364.7 292,364.7 219,364.7 146,364.7 73,364.7 0,364.7 "/>
+<polyline class="st1" points="0,437.6 73,437.6 146,437.6 219,437.6 292,437.6 365.1,437.6 438.1,437.6 511.1,437.6 "/>
+<polyline class="st2" points="0.9,511.5 73.9,511.5 146.9,511.5 220,511.5 293,511.5 366,511.5 439,511.5 512,511.5 "/>
+<polyline class="st1" points="438.1,0 438.1,72.9 438.1,145.9 438.1,218.8 438.1,291.7 438.1,364.7 438.1,437.6 438.1,510.5 "/>
+<polyline class="st2" points="512,0 512,72.9 512,145.9 512,218.8 512,291.7 512,364.7 512,437.6 512,510.5 "/>
+<polyline class="st1" points="365.1,510.5 365.1,437.6 365.1,364.7 365.1,291.7 365.1,218.8 365.1,145.9 365.1,72.9 365.1,0 "/>
+<polyline class="st1" points="292,510.5 292,437.6 292,364.7 292,291.7 292,218.8 292,145.9 292,72.9 292,0 "/>
+<polyline class="st1" points="219,0 219,72.9 219,145.9 219,218.8 219,291.7 219,364.7 219,437.6 219,510.5 "/>
+<polyline class="st1" points="146,0 146,72.9 146,145.9 146,218.8 146,291.7 146,364.7 146,437.6 146,510.5 "/>
+<polyline class="st1" points="73,510.5 73,437.6 73,364.7 73,291.7 73,218.8 73,145.9 73,72.9 73,0 "/>
+<polyline class="st3" points="244,416.7 292,407.1 295,406.1 301,405 301,422 "/>
+<path class="st3" d="M451,388c3,3,10,18,7,25s-3,16-2,17s-13,11-12,13s-6,4-5,5s-4,7-4,7l1.6-0.1L426,465.3c0,0,0,0-0.1,0l-1.7-0.5
 	L424,344v-1l1.9,1.8l0,0l26.8,25.9l5,4.8C454.1,379.6,449,386,451,388z"/>
-<path class="st0" d="M463.1,380.8c-0.1,0-0.1,0.1-0.2,0.2l-0.1-0.5L463.1,380.8z"/>
-<polygon class="st1" points="278.8,201.3 300.6,260.9 176.9,397.2 98.4,326 217.1,195.3 "/>
+<path class="st3" d="M463.1,380.8c-0.1,0-0.1,0.1-0.2,0.2l-0.1-0.5L463.1,380.8z"/>
+<polygon class="st4" points="278.8,201.3 300.6,260.9 176.9,397.2 98.4,326 217.1,195.3 "/>
 <g>
-	<circle class="st2" cx="120" cy="380" r="109"/>
+	<circle class="st5" cx="120" cy="380" r="109"/>
 </g>
 <g>
-	<polygon class="st0" points="415,271 357,109 194,92 394,65 	"/>
-	<polygon class="st3" points="399,200 364.4,101.7 267,91.4 386.5,75 	"/>
-	<polygon class="st4" points="386,139 370,95 325,90.3 380.2,83 	"/>
+	<polygon class="st3" points="415,271 357,109 194,92 394,65 	"/>
+	<polygon class="st6" points="399,200 364.4,101.7 267,91.4 386.5,75 	"/>
+	<polygon class="st7" points="386,139 370,95 325,90.3 380.2,83 	"/>
 </g>
 <g>
-	<polygon class="st0" points="427.3,154 395.2,64.3 305,54.9 415.7,40 	"/>
-	<polygon class="st3" points="418.4,114.7 399.3,60.3 345.4,54.6 411.5,45.5 	"/>
-	<polygon class="st4" points="411.3,81 402.4,56.6 377.5,54 408,50 	"/>
+	<polygon class="st3" points="427.3,154 395.2,64.3 305,54.9 415.7,40 	"/>
+	<polygon class="st6" points="418.4,114.7 399.3,60.3 345.4,54.6 411.5,45.5 	"/>
+	<polygon class="st7" points="411.3,81 402.4,56.6 377.5,54 408,50 	"/>
 </g>
 <g>
-	<polygon class="st0" points="433.5,88 416.1,39.2 367,34.1 427.2,26 	"/>
-	<polygon class="st3" points="428.7,66.6 418.3,37 389,33.9 424.9,29 	"/>
-	<polygon class="st4" points="424.8,48.3 420,35 406.4,33.6 423,31.4 	"/>
+	<polygon class="st3" points="433.5,88 416.1,39.2 367,34.1 427.2,26 	"/>
+	<polygon class="st6" points="428.7,66.6 418.3,37 389,33.9 424.9,29 	"/>
+	<polygon class="st7" points="424.8,48.3 420,35 406.4,33.6 423,31.4 	"/>
 </g>
 <g>
-	<polygon class="st0" points="305.3,255.8 305.5,258.1 304.9,256.3 	"/>
-	<polygon class="st3" points="305.5,258.1 304.9,256.3 305.3,255.8 	"/>
+	<polygon class="st3" points="305.3,255.8 305.5,258.1 304.9,256.3 	"/>
+	<polygon class="st6" points="305.5,258.1 304.9,256.3 305.3,255.8 	"/>
 </g>
-<circle class="st5" cx="121" cy="381" r="83.5"/>
-<circle class="st5" cx="120" cy="381" r="50.5"/>
-<line class="st5" x1="256.5" y1="381.5" x2="0.5" y2="380.5"/>
-<line class="st5" x1="120.5" y1="245.5" x2="119.5" y2="503.5"/>
-<circle class="st0" cx="120" cy="380" r="13.5"/>
-<polygon class="st6" points="424,344 420,466 295.8,422 276,415 294.3,406.2 294.8,406 "/>
-<polyline class="st7" points="323,410.4 401,379 398.9,433 "/>
-<polyline class="st8" points="340,407.6 394,389 392.5,421 "/>
-<path class="st9" d="M424,344l-3.9,118.8c0,0,12.9,9.2,16.9-6.8s-11-9-8-13s22-5,28-5s-17-15-23-14s26-1,14-18s-14-22-2-29
+<circle class="st8" cx="121" cy="381" r="83.5"/>
+<circle class="st8" cx="120" cy="381" r="50.5"/>
+<line class="st8" x1="256.5" y1="381.5" x2="0.5" y2="380.5"/>
+<line class="st8" x1="120.5" y1="245.5" x2="119.5" y2="503.5"/>
+<circle class="st3" cx="120" cy="380" r="13.5"/>
+<polygon class="st9" points="424,344 420,466 295.8,422 276,415 294.3,406.2 294.8,406 "/>
+<polyline class="st10" points="323,410.4 401,379 398.9,433 "/>
+<polyline class="st11" points="340,407.6 394,389 392.5,421 "/>
+<path class="st12" d="M424,344l-3.9,118.8c0,0,12.9,9.2,16.9-6.8s-11-9-8-13s22-5,28-5s-17-15-23-14s26-1,14-18s-14-22-2-29
 	s12-22,0-24L424,344z"/>
-<path class="st10" d="M262,416"/>
+<path class="st13" d="M262,416"/>
 </svg>

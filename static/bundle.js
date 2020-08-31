@@ -42,7 +42,18 @@ function fetchTexture(path) {
     return texture
   }
 }
+window.aiptag = window.aiptag || {cmd: []};
+aiptag.cmd.display = aiptag.cmd.display || [];
+aiptag.cmd.player = aiptag.cmd.player || [];
 
+//CMP tool settings
+aiptag.cmp = {
+  show: true,
+  position: "centered",  //centered, bottom
+  button: true,
+  buttonText: "Privacy settings",
+  buttonPosition: "bottom-left" //bottom-left, bottom-right, top-left, top-right
+}
 let genId=require("./js/genId.js")
 document.getElementById('nickname').oninput = function() {
   nickname = document.getElementById('nickname').value
@@ -404,9 +415,10 @@ clearInterval(pi);
 Object.keys(PIXI.utils.TextureCache).forEach(function(texture) {
   PIXI.utils.TextureCache[texture].destroy(true);
 });
+require("./showVideoAd.js")()
 }
 
-},{}],4:[function(require,module,exports){
+},{"./showVideoAd.js":7}],4:[function(require,module,exports){
 module.exports=function drawRect(color, width, height, borderSize, borderColor) {
   var graphics = new PIXI.Graphics();
   if (!borderSize) {
@@ -453,6 +465,33 @@ module.exports=async(id)=>{
       modal.style.display="none"
       return;
   }
+}
+
+},{}],7:[function(require,module,exports){
+module.exports=()=>{
+  aiptag.cmd.player.push(function() {
+	adplayer = new aipPlayer({
+		AD_WIDTH: 960,
+		AD_HEIGHT: 540,
+		AD_FULLSCREEN: false,
+		AD_CENTERPLAYER: false,
+		LOADING_TEXT: 'loading advertisement',
+		PREROLL_ELEM: function(){return document.getElementById('preroll')},
+		AIP_COMPLETE: function (evt)  {
+			/*******************
+			 ***** WARNING *****
+			 *******************
+			 Please do not remove the PREROLL_ELEM
+			 from the page, it will be hidden automaticly.
+			 If you do want to remove it use the AIP_REMOVE callback.
+			*/
+			console.log("Preroll Ad Completed: " + evt);
+		},
+		AIP_REMOVE: function ()  {
+			// Here it's save to remove the PREROLL_ELEM from the page if you want. But it's not recommend.
+		}
+	});
+});
 }
 
 },{}]},{},[1]);
