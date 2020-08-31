@@ -2,6 +2,7 @@ global.bases = require("./json/bases.json")
 global.bullets = require("./json/bullets.json")
 global.fs = require("fs")
 global.debug=fs.existsSync(__dirname+"/debug.txt")
+
 global.fetch = require("node-fetch")
 global.express = require("express")
 let secretKey = "dfgdsjl8478fYYIU8fopE87idsfdsJ9d813qqppMm4"
@@ -77,7 +78,7 @@ app.get("/api/profile/:token",async (req,res)=>{
 })
 global.https = require('https').createServer(httpsConfig, app);
 global.http = require('http').createServer(app);
-let mongoClient=require("mongodb").MongoClient("mongodb://root:HippothebestDB@"+(debug?"192.168.0.6:27017":"kh1.bravery.fun:2023")+"/admin",{ useNewUrlParser: true,useUnifiedTopology:true })
+let mongoClient=require("mongodb").MongoClient("mongodb://root:HippothebestDB@"+(debug?"192.168.0.6:27017":"kh1.bravery.fun:2025")+"/admin",{ useNewUrlParser: true,useUnifiedTopology:true })
 mongoClient.connect(function(err, client){
     if(err) return console.log(err);
     global.db=client.db("druon")
