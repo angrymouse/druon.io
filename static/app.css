@@ -136,7 +136,7 @@ h1 {
   top: 20px;
   right: 20px;
   min-width: 200px;
-  min-height: 80%;
+height: calc(100% - 40px);
   float: right;
   border-radius: 8px;
   position: absolute;
