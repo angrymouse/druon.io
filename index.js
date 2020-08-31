@@ -1,7 +1,7 @@
 global.bases = require("./json/bases.json")
 global.bullets = require("./json/bullets.json")
 global.fs = require("fs")
-global.debug=fs.existsSync("./debug.txt")
+global.debug=fs.existsSync(__dirname+"/debug.txt")
 global.fetch = require("node-fetch")
 global.express = require("express")
 let secretKey = "dfgdsjl8478fYYIU8fopE87idsfdsJ9d813qqppMm4"
