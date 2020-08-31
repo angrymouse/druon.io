@@ -35,7 +35,9 @@
   display: none;
   z-index: 1000;
 }
-
+#play{
+  margin-bottom: 5px;
+}
 * {
   font-family: 'Oxygen', sans-serif;
 }
@@ -126,7 +128,8 @@ h1 {
 #logo {
   display: inline-block;
   position: relative;
-  width: 400px;
+  width: 250px;
+
 }
 
 .right-block {
@@ -189,16 +192,18 @@ input {
   border: none;
   padding: 10px;
   text-align: center;
-  margin-top: 10px;
+  margin-top: 5px;
   border-radius: 8px;
   background-color: rgba(242, 166, 98, 0.5);
   color: #fff;
 }
 
 #select-server {
-  margin-top: 10px;
-  border-radius: 10px;
+  margin-top: 5px;
+  border-radius: 8px;
   padding: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
   font-size: 16px;
   font-weight: 700;
   width: 50%;
@@ -212,7 +217,7 @@ input {
 }
 
 .button {
-  padding: 10px 20px;
+  padding: 5px 20px;
   font-size: 30px;
   color: #FF931E;
   background-color: #FCEE21;
