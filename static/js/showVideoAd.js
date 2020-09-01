@@ -3,8 +3,8 @@ module.exports=()=>{
 	adplayer = new aipPlayer({
 		AD_WIDTH: 960,
 		AD_HEIGHT: 540,
-		AD_FULLSCREEN: false,
-		AD_CENTERPLAYER: false,
+		AD_FULLSCREEN: true,
+		AD_CENTERPLAYER: true,
 		LOADING_TEXT: 'loading advertisement',
 		PREROLL_ELEM: function(){return document.getElementById('preroll')},
 		AIP_COMPLETE: function (evt)  {
