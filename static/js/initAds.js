@@ -1,6 +1,18 @@
 module.exports=()=>{
+  window.aiptag = window.aiptag || {cmd: []};
+  aiptag.cmd.display = aiptag.cmd.display || [];
+  aiptag.cmd.player = aiptag.cmd.player || [];
+
+  //CMP tool settings
+  aiptag.cmp = {
+    show: true,
+    position: "centered",  //centered, bottom
+    button: true,
+    buttonText: "Privacy settings",
+    buttonPosition: "bottom-left" //bottom-left, bottom-right, top-left, top-right
+  }
   aiptag.cmd.player.push(function() {
-	adplayer = new aipPlayer({
+	window.adplayer = new aipPlayer({
 		AD_WIDTH: 960,
 		AD_HEIGHT: 540,
 		AD_FULLSCREEN: true,

@@ -42,18 +42,8 @@ function fetchTexture(path) {
     return texture
   }
 }
-window.aiptag = window.aiptag || {cmd: []};
-aiptag.cmd.display = aiptag.cmd.display || [];
-aiptag.cmd.player = aiptag.cmd.player || [];
+require("./js/initAds.js")()
 
-//CMP tool settings
-aiptag.cmp = {
-  show: true,
-  position: "centered",  //centered, bottom
-  button: true,
-  buttonText: "Privacy settings",
-  buttonPosition: "bottom-left" //bottom-left, bottom-right, top-left, top-right
-}
 let genId=require("./js/genId.js")
 document.getElementById('nickname').oninput = function() {
   nickname = document.getElementById('nickname').value
@@ -377,7 +367,7 @@ window.onhashchange=()=>{
   require("./js/showModal.js")(window.location.hash.slice(1))
 }
 
-},{"./js/account.js":2,"./js/disconnect.js":3,"./js/drawRect.js":4,"./js/genId.js":5,"./js/showModal.js":6}],2:[function(require,module,exports){
+},{"./js/account.js":2,"./js/disconnect.js":3,"./js/drawRect.js":4,"./js/genId.js":5,"./js/initAds.js":6,"./js/showModal.js":7}],2:[function(require,module,exports){
 module.exports = async () => {
   let token = localStorage.getItem("token")
   if (!token) {
@@ -415,10 +405,16 @@ clearInterval(pi);
 Object.keys(PIXI.utils.TextureCache).forEach(function(texture) {
   PIXI.utils.TextureCache[texture].destroy(true);
 });
-require("./showVideoAd.js")()
+if (typeof adplayer !== 'undefined') {
+	aiptag.cmd.player.push(function() { adplayer.startPreRoll(); });
+} else {
+	//Adlib didnt load this could be due to an adblocker, timeout etc.
+	//Please add your script here that starts the content, this usually is the same script as added in AIP_COMPLETE or AIP_REMOVE.
+	console.log("Ad Could not be loaded, load your content here");
+}
 }
 
-},{"./showVideoAd.js":7}],4:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 module.exports=function drawRect(color, width, height, borderSize, borderColor) {
   var graphics = new PIXI.Graphics();
   if (!borderSize) {
@@ -445,32 +441,21 @@ module.exports=function genId(prefix) {
 }
 
 },{}],6:[function(require,module,exports){
-module.exports=async(id)=>{
-    let modal=document.getElementById("modal")
-  switch (id) {
-    case "profile":
-
-    modal.style.display="block"
-    modal.innerHTML=`
-    <img id="profile-avatar" src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128">
-    <span id="profile-tag">${user.username}#${user.discriminator}</span>
-      <span id="profile-gems">Gems: ${user.gems} <i class="icon-gem"></i></span>
-      <span id="profile-maxXp">Max. XP: ${user.record} <i class="icon-trophy"></i></span>
-<span id="profile-gamesPlayed">Games played: ${user.games} <i class="icon-swords"></i></span>
-<a href="#" id="close-modal"></a>
-      `
-      return ;
-    default:
-
-      modal.style.display="none"
-      return;
-  }
-}
-
-},{}],7:[function(require,module,exports){
 module.exports=()=>{
+  window.aiptag = window.aiptag || {cmd: []};
+  aiptag.cmd.display = aiptag.cmd.display || [];
+  aiptag.cmd.player = aiptag.cmd.player || [];
+
+  //CMP tool settings
+  aiptag.cmp = {
+    show: true,
+    position: "centered",  //centered, bottom
+    button: true,
+    buttonText: "Privacy settings",
+    buttonPosition: "bottom-left" //bottom-left, bottom-right, top-left, top-right
+  }
   aiptag.cmd.player.push(function() {
-	adplayer = new aipPlayer({
+	window.adplayer = new aipPlayer({
 		AD_WIDTH: 960,
 		AD_HEIGHT: 540,
 		AD_FULLSCREEN: true,
@@ -492,6 +477,29 @@ module.exports=()=>{
 		}
 	});
 });
+}
+
+},{}],7:[function(require,module,exports){
+module.exports=async(id)=>{
+    let modal=document.getElementById("modal")
+  switch (id) {
+    case "profile":
+
+    modal.style.display="block"
+    modal.innerHTML=`
+    <img id="profile-avatar" src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128">
+    <span id="profile-tag">${user.username}#${user.discriminator}</span>
+      <span id="profile-gems">Gems: ${user.gems} <i class="icon-gem"></i></span>
+      <span id="profile-maxXp">Max. XP: ${user.record} <i class="icon-trophy"></i></span>
+<span id="profile-gamesPlayed">Games played: ${user.games} <i class="icon-swords"></i></span>
+<a href="#" id="close-modal"></a>
+      `
+      return ;
+    default:
+
+      modal.style.display="none"
+      return;
+  }
 }
 
 },{}]},{},[1]);
