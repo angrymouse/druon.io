@@ -189,4 +189,22 @@ exports.User=class User {
     }
     return profile
   }
+  async updateProfile(k,v){
+    let user=await this.fetchUser()
+    if(!user){return null}
+    let profile=await this.fetchProfile()
+    if(!profile){return null}
+    db.collection("profiles").updateOne({id:user.id},{$set:{[k]:v}})
+    profile=await this.fetchProfile()
+    return profile
+  }
+  async updatePlus(k,v){
+    let user=await this.fetchUser()
+    if(!user){return null}
+    let profile=await this.fetchProfile()
+    if(!profile){return null}
+    db.collection("profiles").updateOne({id:user.id},{$set:{[k]:v+profile[k]}})
+    profile=await this.fetchProfile()
+    return profile
+  }
 }

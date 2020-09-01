@@ -1,4 +1,6 @@
-module.exports=()=>{document.body.removeChild(app.view);
+module.exports=()=>{
+  require("./account.js")()
+  document.body.removeChild(app.view);
 // app.stage.destroy()
 // app.renderer.destroy()
 app.destroy()
@@ -7,16 +9,13 @@ window.onkeyup = () => {}
 window.onkeydown = () => {}
 sprites = new Map()
 oAttributes = new Map()
-textures = new Map()
+
 destroing = []
 newState = []
 document.getElementById("welcome").style.display = "inline-block"
 document.getElementById("interface").style.display = "none"
 clearInterval(pi);
 
-Object.keys(PIXI.utils.TextureCache).forEach(function(texture) {
-  PIXI.utils.TextureCache[texture].destroy(true);
-});
 if (typeof adplayer !== 'undefined') {
 	aiptag.cmd.player.push(function() { adplayer.startPreRoll(); });
 } else {

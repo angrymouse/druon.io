@@ -5,6 +5,7 @@ let time = Date.now()
 if (nickname) {
   document.getElementById('nickname').value = nickname
 }
+
 let servers = new Map([
     ["Amsterdam #1", "wss://druonio.bravery.fun/"],
   ["Kharkiv #1", "wss://kh1.bravery.fun:2026/"],
@@ -71,10 +72,12 @@ async function play() {
     10000,
   );
   app.stage.addChild(background);
+  
 let server=servers.get(document.getElementById("select-server").value)+"game"
   window.socket = io(server)
-  socket.emit("spawn", nickname)
+  socket.emit("spawn", nickname,localStorage.getItem("token"))
   socket.on("disconnect", () => {
+
   require('./js/disconnect.js')()
   })
   socket.on("id", (id) => {
@@ -386,7 +389,9 @@ module.exports = async () => {
 }
 
 },{}],3:[function(require,module,exports){
-module.exports=()=>{document.body.removeChild(app.view);
+module.exports=()=>{
+  require("./account.js")()
+  document.body.removeChild(app.view);
 // app.stage.destroy()
 // app.renderer.destroy()
 app.destroy()
@@ -395,16 +400,13 @@ window.onkeyup = () => {}
 window.onkeydown = () => {}
 sprites = new Map()
 oAttributes = new Map()
-textures = new Map()
+
 destroing = []
 newState = []
 document.getElementById("welcome").style.display = "inline-block"
 document.getElementById("interface").style.display = "none"
 clearInterval(pi);
 
-Object.keys(PIXI.utils.TextureCache).forEach(function(texture) {
-  PIXI.utils.TextureCache[texture].destroy(true);
-});
 if (typeof adplayer !== 'undefined') {
 	aiptag.cmd.player.push(function() { adplayer.startPreRoll(); });
 } else {
@@ -414,7 +416,7 @@ if (typeof adplayer !== 'undefined') {
 }
 }
 
-},{}],4:[function(require,module,exports){
+},{"./account.js":2}],4:[function(require,module,exports){
 module.exports=function drawRect(color, width, height, borderSize, borderColor) {
   var graphics = new PIXI.Graphics();
   if (!borderSize) {
@@ -492,6 +494,10 @@ module.exports=async(id)=>{
       <span id="profile-gems">Gems: ${user.gems} <i class="icon-gem"></i></span>
       <span id="profile-maxXp">Max. XP: ${user.record} <i class="icon-trophy"></i></span>
 <span id="profile-gamesPlayed">Games played: ${user.games} <i class="icon-swords"></i></span>
+<span id="profile-title">Unlocked skins</span>
+<div id="profile-skins">${
+  user.skins.map(skin=>`<div class="profile-skin"><img class="profile-skin-image" src="/assets/skins/${skin.character}/${skin.skin}.svg"></img><span class="skin-name">${skin.skin}</span></div>`).join("")
+}</div>
 <a href="#" id="close-modal"></a>
       `
       return ;

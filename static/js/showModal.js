@@ -10,6 +10,10 @@ module.exports=async(id)=>{
       <span id="profile-gems">Gems: ${user.gems} <i class="icon-gem"></i></span>
       <span id="profile-maxXp">Max. XP: ${user.record} <i class="icon-trophy"></i></span>
 <span id="profile-gamesPlayed">Games played: ${user.games} <i class="icon-swords"></i></span>
+<span id="profile-title">Unlocked skins</span>
+<div id="profile-skins">${
+  user.skins.map(skin=>`<div class="profile-skin"><img class="profile-skin-image" src="/assets/skins/${skin.character}/${skin.skin}.svg"></img><span class="skin-name">${skin.skin}</span></div>`).join("")
+}</div>
 <a href="#" id="close-modal"></a>
       `
       return ;

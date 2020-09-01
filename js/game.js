@@ -10,20 +10,24 @@ module.exports=async () => {
 
   let {
     Scene,
-    GameObject
+    GameObject,
+    User
   } = require("./classes.js")
 
 
   global.scene = new Scene(io, bases)
 
   io.of("/game").on("connection", async (socket) => {
-    socket.on("spawn", async (nickname) => {
+    socket.on("spawn", async (nickname,token) => {
       if (!nickname||nickname.trim() == "") {
         nickname = "druon.io"
       }
+      socket.user=new User(token)
+      socket.discordUser=await socket.user.fetchUser()
       socket.sprite = scene.addPlayer("tank", socket, {
         nickname: nickname
       })
+
       socket.god=false
       setEvents(socket)
     })

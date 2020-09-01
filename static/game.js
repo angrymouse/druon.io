@@ -4,6 +4,7 @@ let time = Date.now()
 if (nickname) {
   document.getElementById('nickname').value = nickname
 }
+
 let servers = new Map([
     ["Amsterdam #1", "wss://druonio.bravery.fun/"],
   ["Kharkiv #1", "wss://kh1.bravery.fun:2026/"],
@@ -70,10 +71,12 @@ async function play() {
     10000,
   );
   app.stage.addChild(background);
+  
 let server=servers.get(document.getElementById("select-server").value)+"game"
   window.socket = io(server)
-  socket.emit("spawn", nickname)
+  socket.emit("spawn", nickname,localStorage.getItem("token"))
   socket.on("disconnect", () => {
+
   require('./js/disconnect.js')()
   })
   socket.on("id", (id) => {

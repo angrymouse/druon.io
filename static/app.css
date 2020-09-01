@@ -57,6 +57,7 @@ body, html {
   position: relative;
   background-color: rgba(96, 78, 62, 0.8);
   border-radius: 4px;
+  backdrop-filter: blur(3px);
 }
 
 h1 {
@@ -75,9 +76,11 @@ h1 {
   position: relative;
   background-color: rgba(57, 57, 57, 0.53);
   border-radius: 4px;
+
 }
 
 #cords {
+
   pointer-events: none;
   user-select: none;
   text-align: center;
@@ -91,6 +94,7 @@ h1 {
 }
 
 #ping {
+
   pointer-events: none;
   user-select: none;
   text-align: center;
@@ -156,6 +160,7 @@ height: calc(100% - 40px);
 .center-block {
   top: 20px;
   left: 50%;
+    backdrop-filter: blur(3px);
   background-color: rgba(96, 78, 62, 0.5);
   transform: translate(-50%);
   min-width: 600px;
@@ -361,7 +366,8 @@ transform: translate(-50%);
   width:90vh;
   height:50vh;
   z-index: 99999;
-  background-color: #322f3d;
+  background-color: rgba(50, 47, 61, 0.77);
+  backdrop-filter: blur(10px);
 }
 #profile-avatar{
   border-bottom-left-radius: 8px;
@@ -383,7 +389,7 @@ height:110px;
   font-size: 18px;
   font-weight: 600;
   font-family: 'Alata';
-  color:#4b5d67;
+  color:#b6e5ff;
 }
 #profile-gems{
     color:#68b0ab;
@@ -404,6 +410,16 @@ height:110px;
     position: absolute;
     left:140px;
     top:80px;
+    vertical-align: baseline;
+}
+#profile-title{
+    color:#ffd571;
+    position: absolute;
+    left:50%;
+    transform:translate(-50%,0);
+    font-size: 24px;
+    font-weight: 600;
+    top:120px;
     vertical-align: baseline;
 }
 .icon-gem{
@@ -435,6 +451,35 @@ height:110px;
 
   background-size: 100% 100%;
 
+}
+#profile-skins{
+  position: absolute;
+  top:150px;
+  left:50%;
+  min-height: 60px;
+  transform: translate(-50%,0);
+  display: inline-block;
+
+}
+.profile-skin{
+  background-color: rgba(255,255,255,0.2);
+  border-radius: 6px;
+  display: inline-block;
+  position: relative;
+  width:70px;
+  margin:10px;
+  height:90px;
+  padding:5px;
+  padding-left:12px;
+  padding-right:12px;
+
+}
+.skin-name{
+  color:#f4ea8e;
+  text-transform: uppercase;
+  font-weight: 600;
+  left:50%;
+  transform: translate(-50%,0);
 }
 #close-modal{
   position: absolute;
