@@ -67,7 +67,15 @@ if(obj.data.type=="PLAYER"){
   if(obj.data.hp<0){
     let killer=obj.scene.getObject(obj.data.lastDamaged)
 
-    if(killer.data){  killer.data.xp+=obj.data.xp}
+    if(killer.data){  killer.data.xp+=obj.data.xp;
+      if(killer.socket&&killer.socket.user){
+       killer.socket.user.fetchProfile().then(killerData=>{
+           killer.socket.user.updateProfile("record",Math.max(killer.data.xp,killerData.record))
+       })
+
+
+      }}
+
     obj.socket.disconnect(true)
     obj.destroy()
 
