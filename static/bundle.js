@@ -5,7 +5,13 @@ let time = Date.now()
 if (nickname) {
   document.getElementById('nickname').value = nickname
 }
+Math.rand = function(min, max) {
 
+  let rand = min + Math.random() * (max + 1 - min);
+  return Math.floor(rand);
+}
+require("./js/animateGradient.js")()
+require("./js/loadTextures.js")()
 let servers = new Map([
     ["Amsterdam #1", "wss://druonio.bravery.fun/"],
   ["Kharkiv #1", "wss://kh1.bravery.fun:2026/"],
@@ -35,13 +41,7 @@ let me;
 window.messages = []
 
 function fetchTexture(path) {
-  if (textures.get(path)) {
-    return textures.get(path)
-  } else {
-    let texture = PIXI.Texture.from("/assets/" + path)
-    textures.set(path, texture)
-    return texture
-  }
+    return PIXI.Loader.shared.resources["/assets/"+path].texture
 }
 require("./js/initAds.js")()
 
@@ -72,7 +72,7 @@ async function play() {
     10000,
   );
   app.stage.addChild(background);
-  
+
 let server=servers.get(document.getElementById("select-server").value)+"game"
   window.socket = io(server)
   socket.emit("spawn", nickname,localStorage.getItem("token"))
@@ -370,7 +370,7 @@ window.onhashchange=()=>{
   require("./js/showModal.js")(window.location.hash.slice(1))
 }
 
-},{"./js/account.js":2,"./js/disconnect.js":3,"./js/drawRect.js":4,"./js/genId.js":5,"./js/initAds.js":6,"./js/showModal.js":7}],2:[function(require,module,exports){
+},{"./js/account.js":2,"./js/animateGradient.js":3,"./js/disconnect.js":4,"./js/drawRect.js":5,"./js/genId.js":6,"./js/initAds.js":7,"./js/loadTextures.js":8,"./js/showModal.js":9}],2:[function(require,module,exports){
 module.exports = async () => {
   let token = localStorage.getItem("token")
   if (!token) {
@@ -389,6 +389,18 @@ module.exports = async () => {
 }
 
 },{}],3:[function(require,module,exports){
+module.exports=()=>{
+  let r=Math.rand(0,255),
+      g=Math.rand(0,255),
+      b=Math.rand(0,255)
+  let background=document.getElementById("loading")
+
+  background.style.backgroundImage=`linear-gradient(217deg, rgba(${r},0,0,.8), rgba(${r},0,0,0) 70.71%),linear-gradient(127deg, rgba(0,${g},0,.8), rgba(0,${g},0,0) 70.71%),linear-gradient(336deg, rgba(0,0,${b},.8), rgba(0,0,${b},0) 70.71%)`
+
+
+}
+
+},{}],4:[function(require,module,exports){
 module.exports=()=>{
   require("./account.js")()
   document.body.removeChild(app.view);
@@ -416,7 +428,7 @@ if (typeof adplayer !== 'undefined') {
 }
 }
 
-},{"./account.js":2}],4:[function(require,module,exports){
+},{"./account.js":2}],5:[function(require,module,exports){
 module.exports=function drawRect(color, width, height, borderSize, borderColor) {
   var graphics = new PIXI.Graphics();
   if (!borderSize) {
@@ -434,7 +446,7 @@ module.exports=function drawRect(color, width, height, borderSize, borderColor) 
 
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 module.exports=function genId(prefix) {
   if (!prefix) {
     prefix = "unk"
@@ -442,7 +454,7 @@ module.exports=function genId(prefix) {
   return prefix + Date.now().toString(16) + (Math.random() * 100000).toString(16)
 }
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 module.exports=()=>{
   window.aiptag = window.aiptag || {cmd: []};
   aiptag.cmd.display = aiptag.cmd.display || [];
@@ -481,7 +493,22 @@ module.exports=()=>{
 });
 }
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
+module.exports=async ()=>{
+  let textures=require("./textures.json")
+
+  Object.entries(textures).forEach(e=>{
+    if(e[1]=="original"){e[1]=e[0]}
+    PIXI.Loader.shared.add(e[1],e[0])
+  })
+
+PIXI.Loader.shared.load(()=>{
+    document.getElementById("loading").style.display="none"
+  document.getElementById("welcome").style.display="inline-block"
+})
+}
+
+},{"./textures.json":10}],9:[function(require,module,exports){
 module.exports=async(id)=>{
     let modal=document.getElementById("modal")
   switch (id) {
@@ -506,6 +533,16 @@ module.exports=async(id)=>{
       modal.style.display="none"
       return;
   }
+}
+
+},{}],10:[function(require,module,exports){
+module.exports={
+  "/assets/druon-grid.png": "original",
+  "/assets/skins/tank/default.svg": "original",
+  "/assets/skins/tank/turbo.svg": "original",
+  "/assets/skins/bullet-fire.svg": "original",
+  "/assets/skins/tank.svg": "original",
+  "/banner.svg":"original"
 }
 
 },{}]},{},[1]);

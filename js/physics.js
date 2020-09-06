@@ -71,6 +71,7 @@ if(obj.data.type=="PLAYER"){
       if(killer.socket&&killer.socket.user){
        killer.socket.user.fetchProfile().then(killerData=>{
            killer.socket.user.updateProfile("record",Math.max(killer.data.xp,killerData.record))
+              killer.socket.user.updateProfile("gems",Math.rand(0,killer.data.xp/10))
        })
 
 

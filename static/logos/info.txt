@@ -1,0 +1,14 @@
+
+Hope you enjoy your new logo, here are the people that
+made your beautiful logo happen :)
+font name: Bizon
+font link: https://www.dropbox.com/s/7i4p46rwct96846/Bizon-typeface.zip?dl=0
+font author: Fago Studio
+font author site: http://www.studiofago.com/
+
+
+icon designer: Alfredo @ IconsAlfredo.com
+icon designer link: /AlfredoCreates
+        
+{"bg":"#FBF3EF","icon-gradient-0":"#A92580","icon-gradient-1":"#F7BC00","font":"#2F190E","slogan":"#432d22"}
+      

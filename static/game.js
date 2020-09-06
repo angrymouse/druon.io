@@ -4,7 +4,13 @@ let time = Date.now()
 if (nickname) {
   document.getElementById('nickname').value = nickname
 }
+Math.rand = function(min, max) {
 
+  let rand = min + Math.random() * (max + 1 - min);
+  return Math.floor(rand);
+}
+require("./js/animateGradient.js")()
+require("./js/loadTextures.js")()
 let servers = new Map([
     ["Amsterdam #1", "wss://druonio.bravery.fun/"],
   ["Kharkiv #1", "wss://kh1.bravery.fun:2026/"],
@@ -34,13 +40,7 @@ let me;
 window.messages = []
 
 function fetchTexture(path) {
-  if (textures.get(path)) {
-    return textures.get(path)
-  } else {
-    let texture = PIXI.Texture.from("/assets/" + path)
-    textures.set(path, texture)
-    return texture
-  }
+    return PIXI.Loader.shared.resources["/assets/"+path].texture
 }
 require("./js/initAds.js")()
 
@@ -71,7 +71,7 @@ async function play() {
     10000,
   );
   app.stage.addChild(background);
-  
+
 let server=servers.get(document.getElementById("select-server").value)+"game"
   window.socket = io(server)
   socket.emit("spawn", nickname,localStorage.getItem("token"))
