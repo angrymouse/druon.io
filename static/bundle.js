@@ -13,6 +13,7 @@ Math.rand = function(min, max) {
 require("./js/animateGradient.js")()
 require("./js/loadTextures.js")()
 let servers = new Map([
+      ["Heroku Europe #1", "wss://druon.online/"],
     ["Amsterdam #1", "wss://druonio.bravery.fun/"],
   ["Kharkiv #1", "wss://kh1.bravery.fun:2026/"],
   ["Localhost", "/"],
