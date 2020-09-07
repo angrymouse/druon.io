@@ -368,3 +368,5 @@ require("./js/account.js")()
 window.onhashchange=()=>{
   require("./js/showModal.js")(window.location.hash.slice(1))
 }
+let ss=require("./js/skinSelector.js")
+ss.last()

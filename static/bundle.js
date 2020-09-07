@@ -369,8 +369,10 @@ require("./js/account.js")()
 window.onhashchange=()=>{
   require("./js/showModal.js")(window.location.hash.slice(1))
 }
+let ss=require("./js/skinSelector.js")
+ss.last()
 
-},{"./js/account.js":2,"./js/animateGradient.js":3,"./js/disconnect.js":4,"./js/drawRect.js":5,"./js/genId.js":6,"./js/initAds.js":7,"./js/loadTextures.js":8,"./js/showModal.js":9}],2:[function(require,module,exports){
+},{"./js/account.js":2,"./js/animateGradient.js":3,"./js/disconnect.js":4,"./js/drawRect.js":5,"./js/genId.js":6,"./js/initAds.js":7,"./js/loadTextures.js":8,"./js/showModal.js":9,"./js/skinSelector.js":10}],2:[function(require,module,exports){
 module.exports = async () => {
   let token = localStorage.getItem("token")
   if (!token) {
@@ -508,7 +510,7 @@ PIXI.Loader.shared.load(()=>{
 })
 }
 
-},{"./textures.json":10}],9:[function(require,module,exports){
+},{"./textures.json":11}],9:[function(require,module,exports){
 module.exports=async(id)=>{
     let modal=document.getElementById("modal")
   switch (id) {
@@ -536,6 +538,11 @@ module.exports=async(id)=>{
 }
 
 },{}],10:[function(require,module,exports){
+module.exports.last=()=>{
+  
+}
+
+},{}],11:[function(require,module,exports){
 module.exports={
   "/assets/druon-grid.png": "original",
   "/assets/skins/tank/default.svg": "original",
