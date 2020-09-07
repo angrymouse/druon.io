@@ -84,8 +84,8 @@ mongoClient.connect(function(err, client){
     global.db=client.db("druon")
 
 });
-http.listen(3000, () => {});
-https.listen(process.env.PORT || 8080, () => {});
+http.listen(process.env.HEROKU?process.env.PORT:3000, () => {});
+https.listen(process.env.HEROKU?8080:(process.env.PORT || 8080), () => {});
 require("./js/functions.js");
 require("./js/game.js")()
 console.log("God code: " + godcode);
