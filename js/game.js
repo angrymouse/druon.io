@@ -2,7 +2,7 @@ module.exports=async () => {
 
   let io
 
-  if(process.env.KINTO){
+  if(process.env.KINTO||process.env.HEROKU){
      io = require("socket.io")(http)
   }else{
      io = require("socket.io")(https)
