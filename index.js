@@ -1,4 +1,5 @@
 global.bases = require("./json/bases.json")
+global.skins = require("./json/skins.json")
 global.bullets = require("./json/bullets.json")
 global.fs = require("fs")
 global.debug=fs.existsSync(__dirname+"/debug.txt")

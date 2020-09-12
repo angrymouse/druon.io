@@ -1,9 +1,9 @@
 {
   "tank":{
     "startXp":1,
-    "hp":8,
+
     "shotTimeout":100,
-    "skin":"tank.svg",
+
 "maxHp":10,
 "effects":["heal"],
     "speed":7,

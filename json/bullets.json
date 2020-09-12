@@ -1,6 +1,6 @@
 {
   "fire":{
-    "skin":"bullet-fire.svg",
+
     "speed":20,
     "size":30,
     "damage":2,

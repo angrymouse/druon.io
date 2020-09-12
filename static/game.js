@@ -1,4 +1,5 @@
-window.location.hash=""
+(async()=>{
+  window.location.hash=""
 let nickname = localStorage.getItem("nickname")
 let time = Date.now()
 if (nickname) {
@@ -8,13 +9,15 @@ Math.rand = function(min, max) {
 
   let rand = min + Math.random() * (max + 1 - min);
   return Math.floor(rand);
-}
+};
+await require("./js/account.js")();
 require("./js/animateGradient.js")()
 require("./js/loadTextures.js")()
 let servers = new Map([
-      ["Heroku Europe #1", "wss://druon.online/"],
-    ["Amsterdam #1", "wss://druonio.bravery.fun/"],
-  ["Kharkiv #1", "wss://kh1.bravery.fun:2026/"],
+
+    ["Europe #1", "wss://druonio.bravery.fun/"],
+      ["Europe #2", "wss://druon.online/"],
+  ["Ukraine #1", "wss://kh1.bravery.fun:2026/"],
   ["Localhost", "/"],
 
 ])
@@ -41,6 +44,7 @@ let me;
 window.messages = []
 
 function fetchTexture(path) {
+
     return PIXI.Loader.shared.resources["/assets/"+path].texture
 }
 require("./js/initAds.js")()
@@ -75,7 +79,7 @@ async function play() {
 
 let server=servers.get(document.getElementById("select-server").value)+"game"
   window.socket = io(server)
-  socket.emit("spawn", nickname,localStorage.getItem("token"))
+  socket.emit("spawn", nickname,localStorage.getItem("token"),skinIndex)
   socket.on("disconnect", () => {
 
   require('./js/disconnect.js')()
@@ -195,12 +199,13 @@ let server=servers.get(document.getElementById("select-server").value)+"game"
 
       if (!sprite) {
 
-        sprite = new PIXI.Sprite(fetchTexture("skins/" + obj.skin))
+        sprite = new PIXI.Sprite(fetchTexture(obj.skin))
 
         sprite.id = obj.id
         sprite.anchor.set(0.5, 0.5)
         sprites.set(obj.id, sprite)
         app.stage.addChild(sprite)
+
         sprite.width = obj.width ? obj.width : obj.size
         sprite.height = obj.height ? obj.height : obj.size
         oAttributes.set(obj.id, new Map())
@@ -365,9 +370,10 @@ window.onresize = () => {
 }
 
 window.drawRect=require('./js/drawRect.js');
-require("./js/account.js")()
+
 window.onhashchange=()=>{
   require("./js/showModal.js")(window.location.hash.slice(1))
 }
 let ss=require("./js/skinSelector.js")
 ss.last()
+})()

@@ -1,5 +1,6 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-window.location.hash=""
+(async()=>{
+  window.location.hash=""
 let nickname = localStorage.getItem("nickname")
 let time = Date.now()
 if (nickname) {
@@ -9,13 +10,15 @@ Math.rand = function(min, max) {
 
   let rand = min + Math.random() * (max + 1 - min);
   return Math.floor(rand);
-}
+};
+await require("./js/account.js")();
 require("./js/animateGradient.js")()
 require("./js/loadTextures.js")()
 let servers = new Map([
-      ["Heroku Europe #1", "wss://druon.online/"],
-    ["Amsterdam #1", "wss://druonio.bravery.fun/"],
-  ["Kharkiv #1", "wss://kh1.bravery.fun:2026/"],
+
+    ["Europe #1", "wss://druonio.bravery.fun/"],
+      ["Europe #2", "wss://druon.online/"],
+  ["Ukraine #1", "wss://kh1.bravery.fun:2026/"],
   ["Localhost", "/"],
 
 ])
@@ -42,6 +45,7 @@ let me;
 window.messages = []
 
 function fetchTexture(path) {
+
     return PIXI.Loader.shared.resources["/assets/"+path].texture
 }
 require("./js/initAds.js")()
@@ -76,7 +80,7 @@ async function play() {
 
 let server=servers.get(document.getElementById("select-server").value)+"game"
   window.socket = io(server)
-  socket.emit("spawn", nickname,localStorage.getItem("token"))
+  socket.emit("spawn", nickname,localStorage.getItem("token"),skinIndex)
   socket.on("disconnect", () => {
 
   require('./js/disconnect.js')()
@@ -196,12 +200,13 @@ let server=servers.get(document.getElementById("select-server").value)+"game"
 
       if (!sprite) {
 
-        sprite = new PIXI.Sprite(fetchTexture("skins/" + obj.skin))
+        sprite = new PIXI.Sprite(fetchTexture(obj.skin))
 
         sprite.id = obj.id
         sprite.anchor.set(0.5, 0.5)
         sprites.set(obj.id, sprite)
         app.stage.addChild(sprite)
+
         sprite.width = obj.width ? obj.width : obj.size
         sprite.height = obj.height ? obj.height : obj.size
         oAttributes.set(obj.id, new Map())
@@ -366,27 +371,32 @@ window.onresize = () => {
 }
 
 window.drawRect=require('./js/drawRect.js');
-require("./js/account.js")()
+
 window.onhashchange=()=>{
   require("./js/showModal.js")(window.location.hash.slice(1))
 }
 let ss=require("./js/skinSelector.js")
 ss.last()
+})()
 
 },{"./js/account.js":2,"./js/animateGradient.js":3,"./js/disconnect.js":4,"./js/drawRect.js":5,"./js/genId.js":6,"./js/initAds.js":7,"./js/loadTextures.js":8,"./js/showModal.js":9,"./js/skinSelector.js":10}],2:[function(require,module,exports){
 module.exports = async () => {
   let token = localStorage.getItem("token")
   if (!token) {
+    window.user={error:true}
     document.body.classList.add("unauthorized")
   } else {
-    document.body.classList.add("authorized")
+
     window.user = await fetch("/api/profile/" + token)
     user = await user.json()
-
+if(user.error){
+    return document.body.classList.add("unauthorized")
+}
+  document.body.classList.add("authorized")
     document.getElementById("userdata").innerHTML = `
     <img id="userdata-avatar" src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64">
     <span id="userdata-tag">${user.username}#${user.discriminator}</span>
-  
+
     `
   }
 }
@@ -539,17 +549,61 @@ module.exports=async(id)=>{
 }
 
 },{}],10:[function(require,module,exports){
-module.exports.last=()=>{
-  
+let allSkins=user?user.skins||[]:[]
+if (typeof user=="undefined" || user.error) {
+  window.activeSkin = {
+    character: "tank",
+    skin: "default"
+  }
+  window.skinIndex=null
+} else {
+  if (localStorage.getItem("skin")) {
+    window.skinIndex = localStorage.getItem("skin")
+
+    window.activeSkin=allSkins[skinIndex]
+    if(!activeSkin){
+      skinIndex=0;
+      localStorage.setItem("skin",0)
+        window.activeSkin=allSkins[skinIndex]
+    }
+    skinIndex=parseInt(skinIndex)
+
+  } else {
+    window.skinIndex=0
+    localStorage.setItem("skin", 0)
+      window.activeSkin=allSkins[skinIndex]
+  }
+}
+module.exports.last = () => {
+selectSkin(activeSkin.character,activeSkin.skin)
+}
+window.nextSkin=()=>{
+if(skinIndex>=allSkins.length-1){return}
+
+selectSkin(allSkins[skinIndex+1].character,allSkins[skinIndex+1].skin,1)
+}
+window.prevSkin=()=>{
+if(skinIndex<=0){return}
+
+selectSkin(allSkins[skinIndex-1].character,allSkins[skinIndex-1].skin,-1)
+}
+function selectSkin(c, s,i) {
+  activeSkin = {
+    character: c,
+    skin: s
+  }
+  if(i){window.skinIndex+=i;localStorage.setItem("skin",skinIndex)}
+  document.getElementById("activeskin-preview").src = `/assets/preview/${c}/${s}.svg`
 }
 
 },{}],11:[function(require,module,exports){
 module.exports={
   "/assets/druon-grid.png": "original",
-  "/assets/skins/tank/default.svg": "original",
-  "/assets/skins/tank/turbo.svg": "original",
+  "/assets/skins/tank/tank.svg": "original",
+  
+  "/assets/skins/tank/turbo-skin.svg": "original",
   "/assets/skins/bullet-fire.svg": "original",
-  "/assets/skins/tank.svg": "original",
+    "/assets/bullets/tank/default.svg": "original",
   "/banner.svg":"original"
 }
 

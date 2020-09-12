@@ -33,6 +33,7 @@ module.exports=(obj)=>{
 bullet.rotation=obj.data.rotation+((Math.random()-Math.random())*bullet.scatter)
     let bo=  obj.scene.addObject("BULLET",{
         ...bullet,
+        skin:"bullets/"+obj.data.base+"/"+obj.data.bulletSkin,
         from:obj.data.id,
         x:obj.data.x-Math.cos(obj.data.rotation)*50,
         y:obj.data.y-Math.sin(obj.data.rotation)*50,

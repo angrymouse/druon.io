@@ -64,23 +64,28 @@ exports.Scene = class Scene {
 
     return this.getObject(ob.id)
   }
-  addPlayer(base, socket, other) {
+  addPlayer(cs, socket, other) {
     let id = genId("player")
-    let baseObj = bases[base]
+    let baseObj = bases[cs.character]
+    let skinObj= skins[cs.character][cs.skin]
     socket.id = id
     socket.emit("id", id)
     this.sockets.set(id, socket)
     return this.addObject("PLAYER", {
       id: id,
-      base: base,
+      base: cs.character,
       lastShot: 0,
+
       shotting: false,
-      xp: 1,
+      xp:1,
+      hp:baseObj.maxHp,
       hitbox: "circle",
       size: 100,
       rotation: 0,
       nickname: other.nickname || "druon.io",
-      ...baseObj
+      ...baseObj,
+      ...skinObj,
+      skin:"skins/"+cs.character+"/"+skinObj.skin
     })
 
 
@@ -152,7 +157,7 @@ async function physicsTick(scene) {
 
     obj.plusProp("x", absoluteMovements.x)
     obj.plusProp("y", absoluteMovements.y)
-    obj.set("absoluteMovements",absoluteMovements)
+    obj.set("absoluteMovements", absoluteMovements)
     let exp = require("./psy_tests.js")(obj)
     exp.forEach((ev, i) => {
       if (ev.e) {
@@ -163,48 +168,80 @@ async function physicsTick(scene) {
   });
 
 }
-exports.User=class User {
-  constructor (token){
-    this.token=token
-    let self=this
+exports.User = class User {
+  constructor(token) {
+    this.token = token
+    let self = this
 
   }
-  async fetchUser(){
+  async fetchUser() {
     return await require("./disprofile.js")(this.token)
   }
-  async fetchProfile(){
-    let user=await this.fetchUser()
-    if(!user){return null}
-    let profile=await db.collection("profiles").findOne({id:user.id})
-    if(!profile){
+  async fetchProfile() {
+    let user = await this.fetchUser()
+    if (!user) {
+      return null
+    }
+    let profile = await db.collection("profiles").findOne({
+      id: user.id
+    })
+    if (!profile) {
       await db.collection("profiles").insertOne({
-        id:user.id,
-        gems:10,
-        characters:["tank"],
-        skins:[{character:"tank",skin:"default"}],
-        record:0,
-        games:0
+        id: user.id,
+        gems: 10,
+        characters: ["tank"],
+        skins: [{
+          character: "tank",
+          skin: "default"
+        },
+      {character:"tank",
+    skin:"turbo"}],
+        record: 0,
+        games: 0
       })
-      profile=await db.collection("profiles").findOne({id:user.id})
+      profile = await db.collection("profiles").findOne({
+        id: user.id
+      })
     }
     return profile
   }
-  async updateProfile(k,v){
-    let user=await this.fetchUser()
-    if(!user){return null}
-    let profile=await this.fetchProfile()
-    if(!profile){return null}
-    db.collection("profiles").updateOne({id:user.id},{$set:{[k]:v}})
-    profile=await this.fetchProfile()
+  async updateProfile(k, v) {
+    let user = await this.fetchUser()
+    if (!user) {
+      return null
+    }
+    let profile = await this.fetchProfile()
+    if (!profile) {
+      return null
+    }
+    db.collection("profiles").updateOne({
+      id: user.id
+    }, {
+      $set: {
+        [k]: v
+      }
+    })
+    profile = await this.fetchProfile()
     return profile
   }
-  async updatePlus(k,v){
-    let user=await this.fetchUser()
-    if(!user){return null}
-    let profile=await this.fetchProfile()
-    if(!profile){return null}
-    db.collection("profiles").updateOne({id:user.id},{$set:{[k]:v+profile[k]}})
-    profile=await this.fetchProfile()
+  async updatePlus(k, v) {
+    let user = await this.fetchUser()
+    if (!user) {
+      return null
+    }
+    let profile = await this.fetchProfile()
+    if (!profile) {
+      return null
+    }
+
+    db.collection("profiles").updateOne({
+      id: user.id
+    }, {
+      $set: {
+        [k]: ((typeof profile[k] == "object"&&Array.isArray(profile[k])) ? [...profile[k],...v].unique(): (v + profile[k]))
+      }
+    })
+    profile = await this.fetchProfile()
     return profile
   }
 }

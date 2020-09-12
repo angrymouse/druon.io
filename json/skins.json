@@ -1,0 +1,12 @@
+{
+  "tank":{
+    "default":{
+      "skin":"tank.svg",
+      "bulletSkin":"default.svg"
+    },
+    "turbo":{
+      "skin":"turbo-skin.svg",
+      "bulletSkin":"default.svg"
+    }
+  }
+}
