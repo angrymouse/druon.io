@@ -43,4 +43,6 @@ function selectSkin(c, s,i) {
   }
   if(i){window.skinIndex+=i;localStorage.setItem("skin",skinIndex)}
   document.getElementById("activeskin-preview").src = `/assets/preview/${c}/${s}.svg`
+    document.getElementById("activeskin-skin").innerHTML = s
+    document.getElementById("activeskin-base").innerHTML = c
 }

@@ -27,6 +27,32 @@
   height:100%;
   transition: all .4s
 }
+#activeskin-skin{
+  display: inline-block;
+  position: absolute;
+  bottom:5px;
+  left:50%;
+  transform: translate(-50%);
+  width:100%;
+  text-transform: uppercase;
+  color:#000;
+  background-color: rgba(255,255,255,0.2);
+  transition: all .4s
+}
+#activeskin-base{
+  display: inline-block;
+  position: absolute;
+  top:5px;
+  left:50%;
+  transform: translate(-50%);
+  width:100%;
+  text-transform: uppercase;
+  color:#000;
+  background-color: rgba(255,255,255,0.2);
+  
+
+  transition: all .4s
+}
 #activeskin-preview:hover{
   transform:   scale(1.2) rotate(360deg);
 
