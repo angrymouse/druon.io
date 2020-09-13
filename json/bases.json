@@ -9,5 +9,16 @@
     "speed":7,
     "bullet":"fire"
 
+  },
+  "fireshoter":{
+    "startXp":1,
+
+    "shotTimeout":3,
+
+"maxHp":20,
+"effects":[],
+    "speed":10,
+    "bullet":"firepower"
+
   }
 }

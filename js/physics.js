@@ -17,15 +17,17 @@ let handleByType={
 
   switch (collider.data.type) {
     case "PLAYER":
+
       let angle=calcAngle({x:bullet.data.x,y:bullet.data.y},{x:collider.data.x,y:collider.data.y})
       let move=calcV(angle,(bullet.data.speed+collider.data.speed)/2)
 
       collider.data.energies.set(genId("br"),{...move,expireAt:Date.now()+(1000/fps)})
-
+  if(bullet.data.from==collider.id||bullet.data.from==collider.data.from){return}
       collider.plusProp("hp",-bullet.data.damage)
       collider.data.lastDamaged=bullet.data.from
       break;
   }
+    if(bullet.data.from==collider.id||bullet.data.from==collider.data.from){return}
     bullet.destroy()
 },
 "PLAYER":async(player,collider)=>{

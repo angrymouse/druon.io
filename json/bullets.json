@@ -8,5 +8,15 @@
 "scatter":0.4,
     "hp":1,
     "alive":500
+  },
+  "firepower":{
+
+    "speed":20,
+    "size":20,
+    "damage":2,
+    "recoil":2,
+"scatter":0.4,
+    "hp":1,
+    "alive":200
   }
 }

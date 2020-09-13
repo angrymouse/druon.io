@@ -1,16 +1,21 @@
 {
-  "tank":{
-    "default":{
-      "skin":"tank.svg",
-      "bulletSkin":"default.svg"
+  "tank": {
+    "default": {
+      "skin": "tank.png",
+      "bulletSkin": "default.png"
     },
-    "turbo":{
-      "skin":"turbo-skin.svg",
-      "bulletSkin":"default.svg"
-    },
-    "neon":{
-      "skin":"neon.svg",
-      "bulletSkin":"neon-bullet.svg"
+
+    "neon": {
+      "skin": "neon.png",
+      "bulletSkin": "neon-bullet.png"
     }
-  }
+  },
+  "fireshoter": {
+
+    "turbo": {
+      "skin": "turbo-skin.png",
+      "bulletSkin": "default.png"
+    }
+
+}
 }

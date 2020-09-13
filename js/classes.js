@@ -194,7 +194,7 @@ exports.User = class User {
           character: "tank",
           skin: "default"
         },
-      {character:"tank",
+      {character:"fireshoter",
     skin:"turbo"}],
         record: 0,
         games: 0

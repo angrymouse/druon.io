@@ -3,7 +3,7 @@ global.skins = require("./json/skins.json")
 global.bullets = require("./json/bullets.json")
 global.fs = require("fs")
 global.debug=fs.existsSync(__dirname+"/debug.txt")
-
+const sharp = require('sharp');
 global.fetch = require("node-fetch")
 global.express = require("express")
 let secretKey = "dfgdsjl8478fYYIU8fopE87idsfdsJ9d813qqppMm4"
@@ -22,7 +22,20 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*")
   res.header("Access-Control-Allow-Methods", "*")
   res.header("Access-Control-Allow-Headers", "*")
+  if(req.url.endsWith(".png")){
+    let prepath=(__dirname+"/static/"+req.url).split(".").slice(0,-1).join(".")
+      if(fs.existsSync(prepath+".png")){
+        fs.createReadStream(__dirname+"/static/"+req.url).pipe(res)
+      }else if(fs.existsSync(prepath+".svg")){
+        sharp(prepath+".svg")
+        .png()
+        .pipe(res)
+      }else{
+        next()
+      }
+  }else{
   next()
+}
 })
 app.get("/login", (req, res) => {
 
