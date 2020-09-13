@@ -73,8 +73,8 @@ async function play() {
 
   const background = new PIXI.TilingSprite(
     fetchTexture("druon-grid.png"),
-    10000,
-    10000,
+    5000,
+    5000,
   );
   app.stage.addChild(background);
 

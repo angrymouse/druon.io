@@ -2,27 +2,27 @@ module.exports=(obj)=>{
   let bullets=require("../json/bullets.json")
 
   return [{
-      e: obj.data.x > 9990,
+      e: obj.data.x > 5000,
       a: () => {
-        obj.set("x", 10)
+        obj.set("x", 0)
       }
     },
     {
-      e: obj.data.y > 9990,
+      e: obj.data.y > 5000,
       a: () => {
-        obj.set("y", 10)
+        obj.set("y", 0)
       }
     },
     {
-      e: obj.data.x < 10,
+      e: obj.data.x < 0,
       a: () => {
-        obj.set("x", 9990)
+        obj.set("x", 5000)
       }
     },
     {
-      e: obj.data.y < 10,
+      e: obj.data.y < 0,
       a: () => {
-        obj.set("y", 9990)
+        obj.set("y", 5000)
       }
     },
     {

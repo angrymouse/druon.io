@@ -1,25 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 24.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 281 281" style="enable-background:new 0 0 281 281;" xml:space="preserve">
+	 viewBox="0 0 305.4 324" style="enable-background:new 0 0 305.4 324;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#DCDCDC;}
-	.st1{fill:none;stroke:#8C8C8C;stroke-miterlimit:10;}
-	.st2{fill:none;stroke:#8C8C8C;stroke-width:0.5;stroke-miterlimit:10;}
+	.st0{fill:#FECEAB;stroke:#000000;stroke-width:0.75;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#FF847C;stroke-width:0.25;stroke-miterlimit:10;}
 </style>
-<rect x="0.5" y="0.3" class="st0" width="280" height="280.5"/>
-<polyline class="st1" points="0,40 40,40 80,40 120,40 160,40 200,40 240,40 280,40 "/>
-<polyline class="st1" points="0,80 40,80 80,80 120,80 160,80 200,80 240,80 280,80 "/>
-<polyline class="st1" points="0,120 40,120 80,120 120,120 160,120 200,120 240,120 280,120 "/>
-<polyline class="st1" points="0,160 40,160 80,160 120,160 160,160 200,160 240,160 280,160 "/>
-<polyline class="st1" points="280,200 240,200 200,200 160,200 120,200 80,200 40,200 0,200 "/>
-<polyline class="st1" points="0,240 40,240 80,240 120,240 160,240 200,240 240,240 280,240 "/>
-<polyline class="st2" points="0.5,280.5 40.5,280.5 80.5,280.5 120.5,280.5 160.5,280.5 200.5,280.5 240.5,280.5 280.5,280.5 "/>
-<polyline class="st1" points="240,0 240,40 240,80 240,120 240,160 240,200 240,240 240,280 "/>
-<polyline class="st2" points="280.5,0 280.5,40 280.5,80 280.5,120 280.5,160 280.5,200 280.5,240 280.5,280 "/>
-<polyline class="st1" points="200,280 200,240 200,200 200,160 200,120 200,80 200,40 200,0 "/>
-<polyline class="st1" points="160,280 160,240 160,200 160,160 160,120 160,80 160,40 160,0 "/>
-<polyline class="st1" points="120,0 120,40 120,80 120,120 120,160 120,200 120,240 120,280 "/>
-<polyline class="st1" points="80,0 80,40 80,80 80,120 80,160 80,200 80,240 80,280 "/>
-<polyline class="st1" points="40,280 40,240 40,200 40,160 40,120 40,80 40,40 40,0 "/>
+<rect x="-133.5" y="-18.5" class="st0" width="451" height="379"/>
+<g>
+	<g>
+		<line class="st1" x1="369.4" y1="65.6" x2="-74.6" y2="65.6"/>
+		<line class="st1" x1="368.9" y1="85.6" x2="-75.1" y2="85.6"/>
+		<line class="st1" x1="368.9" y1="105.6" x2="-75.1" y2="105.6"/>
+		<line class="st1" x1="368.9" y1="125.6" x2="-75.1" y2="125.6"/>
+		<line class="st1" x1="368.9" y1="145.6" x2="-75.1" y2="145.6"/>
+		<line class="st1" x1="369" y1="166.1" x2="-75" y2="166.1"/>
+		<line class="st1" x1="368.5" y1="186.1" x2="-75.5" y2="186.1"/>
+		<line class="st1" x1="368.5" y1="206.1" x2="-75.5" y2="206.1"/>
+		<line class="st1" x1="368.5" y1="226.1" x2="-75.5" y2="226.1"/>
+		<line class="st1" x1="368.5" y1="246.1" x2="-75.5" y2="246.1"/>
+		<line class="st1" x1="367.4" y1="268.6" x2="-76.6" y2="268.6"/>
+		<line class="st1" x1="366.9" y1="288.6" x2="-77.1" y2="288.6"/>
+		<line class="st1" x1="366.9" y1="308.6" x2="-77.1" y2="308.6"/>
+		<line class="st1" x1="366.9" y1="328.6" x2="-77.1" y2="328.6"/>
+		<line class="st1" x1="366.9" y1="348.6" x2="-77.1" y2="348.6"/>
+		<line class="st1" x1="367" y1="369.1" x2="-77" y2="369.1"/>
+		<line class="st1" x1="366.5" y1="389.1" x2="-77.5" y2="389.1"/>
+		<line class="st1" x1="366.5" y1="409.1" x2="-77.5" y2="409.1"/>
+		<line class="st1" x1="366.5" y1="429.1" x2="-77.5" y2="429.1"/>
+		<line class="st1" x1="366.5" y1="449.1" x2="-77.5" y2="449.1"/>
+		<line class="st1" x1="369.4" y1="-137.4" x2="-74.6" y2="-137.4"/>
+		<line class="st1" x1="368.9" y1="-117.4" x2="-75.1" y2="-117.4"/>
+		<line class="st1" x1="368.9" y1="-97.4" x2="-75.1" y2="-97.4"/>
+		<line class="st1" x1="368.9" y1="-77.4" x2="-75.1" y2="-77.4"/>
+		<line class="st1" x1="368.9" y1="-57.4" x2="-75.1" y2="-57.4"/>
+		<line class="st1" x1="369" y1="-36.9" x2="-75" y2="-36.9"/>
+		<line class="st1" x1="368.5" y1="-16.9" x2="-75.5" y2="-16.9"/>
+		<line class="st1" x1="368.5" y1="3.1" x2="-75.5" y2="3.1"/>
+		<line class="st1" x1="368.5" y1="23.1" x2="-75.5" y2="23.1"/>
+		<line class="st1" x1="368.5" y1="43.1" x2="-75.5" y2="43.1"/>
+	</g>
+	<g>
+		<line class="st1" x1="63.7" y1="-87.6" x2="63.7" y2="356.4"/>
+		<line class="st1" x1="83.7" y1="-87.1" x2="83.7" y2="356.9"/>
+		<line class="st1" x1="103.7" y1="-87.1" x2="103.7" y2="356.9"/>
+		<line class="st1" x1="123.7" y1="-87.1" x2="123.7" y2="356.9"/>
+		<line class="st1" x1="143.7" y1="-87.1" x2="143.7" y2="356.9"/>
+		<line class="st1" x1="164.2" y1="-87.2" x2="164.2" y2="356.8"/>
+		<line class="st1" x1="184.2" y1="-86.7" x2="184.2" y2="357.3"/>
+		<line class="st1" x1="204.2" y1="-86.7" x2="204.2" y2="357.3"/>
+		<line class="st1" x1="224.2" y1="-86.7" x2="224.2" y2="357.3"/>
+		<line class="st1" x1="244.2" y1="-86.7" x2="244.2" y2="357.3"/>
+		<line class="st1" x1="266.7" y1="-85.6" x2="266.7" y2="358.4"/>
+		<line class="st1" x1="286.7" y1="-85.1" x2="286.7" y2="358.9"/>
+		<line class="st1" x1="306.7" y1="-85.1" x2="306.7" y2="358.9"/>
+		<line class="st1" x1="326.7" y1="-85.1" x2="326.7" y2="358.9"/>
+		<line class="st1" x1="346.7" y1="-85.1" x2="346.7" y2="358.9"/>
+		<line class="st1" x1="367.2" y1="-85.2" x2="367.2" y2="358.8"/>
+		<line class="st1" x1="387.2" y1="-84.7" x2="387.2" y2="359.3"/>
+		<line class="st1" x1="407.2" y1="-84.7" x2="407.2" y2="359.3"/>
+		<line class="st1" x1="427.2" y1="-84.7" x2="427.2" y2="359.3"/>
+		<line class="st1" x1="447.2" y1="-84.7" x2="447.2" y2="359.3"/>
+		<line class="st1" x1="-139.3" y1="-87.6" x2="-139.3" y2="356.4"/>
+		<line class="st1" x1="-119.3" y1="-87.1" x2="-119.3" y2="356.9"/>
+		<line class="st1" x1="-99.3" y1="-87.1" x2="-99.3" y2="356.9"/>
+		<line class="st1" x1="-79.3" y1="-87.1" x2="-79.3" y2="356.9"/>
+		<line class="st1" x1="-59.3" y1="-87.1" x2="-59.3" y2="356.9"/>
+		<line class="st1" x1="-38.8" y1="-87.2" x2="-38.8" y2="356.8"/>
+		<line class="st1" x1="-18.8" y1="-86.7" x2="-18.8" y2="357.3"/>
+		<line class="st1" x1="1.2" y1="-86.7" x2="1.2" y2="357.3"/>
+		<line class="st1" x1="21.2" y1="-86.7" x2="21.2" y2="357.3"/>
+		<line class="st1" x1="41.2" y1="-86.7" x2="41.2" y2="357.3"/>
+	</g>
+</g>
 </svg>
