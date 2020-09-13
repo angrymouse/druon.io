@@ -27,7 +27,7 @@ module.exports=async () => {
       if(isNaN(parseInt(csi))||!socket.discordUser){
         csi=0
       }
-      let ci=[{skin:"default"}]
+      let ci=[{character:"tank",skin:"default"}]
 
       socket.profile=await socket.user.fetchProfile()
       if(socket.profile){
