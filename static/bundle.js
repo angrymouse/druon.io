@@ -600,10 +600,12 @@ function selectSkin(c, s,i) {
 module.exports={
   "/assets/druon-grid.png": "original",
   "/assets/skins/tank/tank.svg": "original",
-  
+
   "/assets/skins/tank/turbo-skin.svg": "original",
+    "/assets/skins/tank/neon.svg": "original",
   "/assets/skins/bullet-fire.svg": "original",
     "/assets/bullets/tank/default.svg": "original",
+        "/assets/bullets/tank/neon-bullet.svg": "original",
   "/banner.svg":"original"
 }
 

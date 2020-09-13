@@ -7,6 +7,10 @@
     "turbo":{
       "skin":"turbo-skin.svg",
       "bulletSkin":"default.svg"
+    },
+    "neon":{
+      "skin":"neon.svg",
+      "bulletSkin":"neon-bullet.svg"
     }
   }
 }
