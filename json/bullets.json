@@ -15,7 +15,7 @@
     "size":20,
     "damage":2,
     "recoil":2,
-"scatter":0.4,
+"scatter":0.2,
     "hp":1,
     "alive":200
   }
