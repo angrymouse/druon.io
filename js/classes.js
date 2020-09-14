@@ -145,6 +145,9 @@ async function physicsTick(scene) {
       return
     }
  await handleCollisions(obj);
+ if (!obj || !obj.data) {
+   return
+ }
     [...obj.data.energies.entries()].forEach((item, i) => {
       if (item[1].expireAt < Date.now()) {
         obj.data.energies.delete(item[0])
