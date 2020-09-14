@@ -92,7 +92,8 @@ app.get("/api/profile/:token",async (req,res)=>{
 })
 global.https = require('https').createServer(httpsConfig, app);
 global.http = require('http').createServer(app);
-let mongoClient=require("mongodb").MongoClient("mongodb://root:HippothebestDB@"+(debug?"192.168.0.6:27017":"kh1.bravery.fun:2025")+"/admin",{ useNewUrlParser: true,useUnifiedTopology:true })
+
+let mongoClient=require("mongodb").MongoClient("mongodb+srv://root:1X5YTD3JEiUhaRly@bravery1.ytjgx.azure.mongodb.net/admin?retryWrites=true&w=majority",{ useNewUrlParser: true,useUnifiedTopology:true })
 mongoClient.connect(function(err, client){
     if(err) return console.log(err);
     global.db=client.db("druon")
