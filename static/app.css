@@ -49,7 +49,7 @@
   text-transform: uppercase;
   color:#000;
   background-color: rgba(255,255,255,0.2);
-  
+
 
   transition: all .4s
 }
@@ -67,13 +67,13 @@
 }
 
 #abt-logo {
-  top: 40%;
+  top: 30%;
   width: 200px;
   height: 200px;
   position: absolute;
   display: block;
   border-radius: 50%;
-  backdrop-filter: blur(5px);
+
   left: 49.8%;
   transform: translate(-50%, -50%);
   transition: all .5s;
@@ -297,10 +297,14 @@ input {
   font-size: 16px;
   font-weight: 700;
   width: 50%;
+  appearence:none;
+  border:none;
   color: #fff;
   background-color: #000;
 }
-
+*{
+    appearence:none;
+}
 #skin-selector {
   margin-top: 5px;
   border-radius: 8px;
@@ -469,7 +473,32 @@ background-image: url("/assets/next.svg");
   background-color: #4b5d67;
   vertical-align: baseline;
 }
+#openShop {
+  text-decoration: none;
+  border-radius: 6px;
 
+  display: var(--au-display);
+
+  height:100px;
+  margin-top: 10px;
+  width: 200px;
+
+
+  text-align: center;
+  visibility: var(--au-visibility);
+  position: relative;
+
+  background: linear-gradient(-45deg,#065c6f,#726a95,#821752);
+  vertical-align: baseline;
+}
+#openShop>img{
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  left:0;
+  top:0;
+}
 #userdata-avatar {
   border-radius: 50%;
   border-style: solid;
@@ -515,6 +544,23 @@ background-image: url("/assets/next.svg");
   z-index: 99999;
   background-color: rgba(50, 47, 61, 0.77);
   backdrop-filter: blur(10px);
+}
+#fullscreen-modal {
+  display: none;
+
+  border: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+
+
+  width: 100%;
+  height:100%;
+  z-index: 99999;
+  background: url(/assets/waves.svg);
+background-size: 100% 100%;
+backdrop-filter:blur(5px);
+background-color: #ffd57e;
 }
 
 #profile-avatar {
@@ -577,8 +623,8 @@ background-image: url("/assets/next.svg");
 
 .icon-gem {
   background-image: url(/assets/gem.svg);
-  width: 16px;
-  height: 16px;
+  width: .9em;
+  height: .9em;
   display: inline-block;
   position: relative;
   background-size: 100% 100%;
@@ -586,8 +632,8 @@ background-image: url("/assets/next.svg");
 
 .icon-swords {
   background-image: url(/assets/swords.svg);
-  width: 16px;
-  height: 16px;
+  width: .9em;
+  height: .9em;
   display: inline-block;
   position: relative;
   background-size: 100% 100%;
@@ -595,8 +641,8 @@ background-image: url("/assets/next.svg");
 
 .icon-trophy {
   background-image: url(/assets/trophy.svg);
-  width: 16px;
-  height: 16px;
+  width: .9em;
+  height: .9em;
   display: inline-block;
   position: relative;
   background-size: 100% 100%;
@@ -647,6 +693,80 @@ background-image: url("/assets/next.svg");
   background-size: 100% 100%;
 }
 
-#close-modal:hover {
-  background-image: url(/assets/close-hover.svg);
+
+#close-modal-large {
+  position: absolute;
+background-color: rgba(77,77,77,1);
+  width: 48px;
+  height: 48px;
+  display: inline-block;
+  right: 0;
+  top: 0;
+  padding:14px;
+  transition: all .4s;
+  border-bottom-left-radius: 10px;
+  background-size: 100% 100%;
+}
+#triangle-shop {
+	width: 0;
+	height: 0;
+  left:0;
+  top:0;
+  position: absolute;
+  z-index: 999;
+	border-top: 120px solid #fca652;
+	border-right: 300px solid transparent;
+}
+#shop-title{
+  position: absolute;
+  display: inline-block;
+  left:0;
+  top:0;
+  text-transform: uppercase;
+  color:#ffefa0;
+  font-size: 46px;
+  user-select: none;
+  font-weight: 500;
+  padding-left: 15px;
+  padding-top: 0px;
+  letter-spacing: 3px;
+  font-family: 'Alata', sans-serif;
+  z-index: 1000;
+}
+#resources{
+  position: absolute;
+  display: inline-block;
+  left:60%;
+  top:0;
+  height:42px;
+  min-width: 50px;
+  padding-left: 20px;
+  padding-right: 20px;
+  color:#fff;
+  font-size: 26px;
+  font-family: 'Alata';
+  text-align: center;
+  vertical-align: baseline;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: #fca652;
+}
+@keyframes bga {
+from{
+  background-position: left;
+}
+50%{
+  background-position: right;
+}
+to{
+  background-position: left
+}
+}
+.comingsoon{
+  position: absolute;
+  left:50%;
+  top:50%;
+  width:80vh;
+  height:auto;
+  transform: translate(-50%,-50%);
 }

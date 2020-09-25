@@ -15,7 +15,7 @@
     "express": "^4.17.1",
     "form-urlencoded": "^4.2.1",
     "mongodb": "^3.6.0",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "sharp": "^0.26.0",
     "socket.io": "^2.3.0"
   }
